@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.lonedev.moviecatalogue"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation rootProject.ext.appCompat
+    implementation rootProject.coreKTX
+    implementation rootProject.fragmentKTX
+
+    implementation rootProject.ext.constraintLayout
+
+    implementation rootProject.ext.lifecycleExtension
+    implementation rootProject.ext.lifecycleViewModel
+    implementation rootProject.ext.lifecycleReactiveStreams
+    implementation rootProject.ext.lifecycleJavaCommon
+
+    implementation rootProject.ext.roomRuntime
+    implementation rootProject.ext.roomKTX
+    implementation rootProject.ext.roomRxJava2
+    kapt rootProject.ext.roomCompiler
+    testImplementation rootProject.ext.roomTesting
+
+    implementation rootProject.ext.materialDesign
+
+    implementation rootProject.ext.dagger
+    implementation rootProject.ext.daggerAndroid
+    implementation rootProject.ext.daggerAndroidSupport
+    kapt rootProject.ext.daggerCompiler
+    kapt rootProject.ext.daggerAndroidProcessor
+
+    implementation rootProject.ext.butterKnife
+    kapt rootProject.ext.butterKnifeCompiler
+
+    implementation rootProject.ext.glide
+    kapt rootProject.ext.glideCompiler
+
+    implementation rootProject.ext.rxJava2
+    implementation rootProject.ext.rxAndroid
+
+    implementation rootProject.ext.retrofit
+    implementation rootProject.ext.gsonConverter
+    implementation rootProject.ext.retrofitRxJava2
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Bagus Yogatama on 6/24/19 1:41 PM
+  ~ Copyright (c) 2019 . All rights reserved.
+  ~ Last modified 6/24/19 1:41 PM
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+            android:id="@+id/menu_setting"
+            android:title="@string/setting"
+            android:icon="@drawable/ic_settings_black_24dp"
+            app:showAsAction="always"/>
+
+</menu>

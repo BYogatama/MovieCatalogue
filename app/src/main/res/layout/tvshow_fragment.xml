@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Bagus Yogatama on 6/24/19 4:56 PM
+  ~ Copyright (c) 2019 . All rights reserved.
+  ~ Last modified 6/24/19 4:56 PM
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_movie"/>
+
+</LinearLayout>

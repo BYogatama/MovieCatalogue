@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Bagus Yogatama on 6/24/19 1:11 PM
+  ~ Copyright (c) 2019 . All rights reserved.
+  ~ Last modified 6/24/19 1:11 PM
+  -->
+
+<resources>
+    <string name="release">Rilis</string>
+    <string name="genres">Jenis</string>
+    <string name="setting">Pengaturan</string>
+    <string name="movies">Film</string>
+    <string name="overview">Ikhtisar</string>
+    <string name="status">Status</string>
+    <string name="language">Bahasa</string>
+    <string name="runtime">Waktu</string>
+    <string name="score">Skor</string>
+    <string name="tv_series">Serial TV</string>
+</resources>
