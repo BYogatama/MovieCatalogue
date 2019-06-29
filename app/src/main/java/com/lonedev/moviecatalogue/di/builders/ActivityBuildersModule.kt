@@ -2,6 +2,7 @@ package com.lonedev.moviecatalogue.di.builders
 
 import com.lonedev.moviecatalogue.ui.main.MainActivity
 import com.lonedev.moviecatalogue.ui.main.details.MovieDetailActivity
+import com.lonedev.moviecatalogue.ui.main.details.TVSeriesDetailActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -12,6 +13,9 @@ abstract class ActivityBuildersModule {
     abstract fun contributeMainActivity(): MainActivity
 
     @ContributesAndroidInjector
-    abstract fun contributeDetailActivity(): MovieDetailActivity
+    abstract fun contributeMovieDetailActivity(): MovieDetailActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeTVSeriesDetailActivity(): TVSeriesDetailActivity
 
 }

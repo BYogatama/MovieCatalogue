@@ -7,6 +7,8 @@
 package com.lonedev.moviecatalogue.di.modules
 
 import androidx.lifecycle.ViewModel
+import com.lonedev.moviecatalogue.ui.main.details.MovieDetailViewModel
+import com.lonedev.moviecatalogue.ui.main.details.TVSeriesDetailViewModel
 import com.lonedev.moviecatalogue.ui.main.fragment.movie.MovieViewModel
 import com.lonedev.moviecatalogue.ui.main.fragment.tv.TVSeriesViewModel
 import com.schoters.androidapp.di.util.ViewModelKey
@@ -25,4 +27,14 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TVSeriesViewModel::class)
     abstract fun bindTVSeriesViewModel(tvSeriesViewModel: TVSeriesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MovieDetailViewModel::class)
+    abstract fun bindMovieDetailViewModel(movieDetailViewModel: MovieDetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TVSeriesDetailViewModel::class)
+    abstract fun bindTVSeriesDetailViewModel(tvSeriesDetailViewModel: TVSeriesDetailViewModel): ViewModel
 }

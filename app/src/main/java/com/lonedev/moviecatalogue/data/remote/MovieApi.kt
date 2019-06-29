@@ -6,11 +6,10 @@
 
 package com.lonedev.moviecatalogue.data.remote
 
-import com.lonedev.moviecatalogue.data.models.Movie
-import com.lonedev.moviecatalogue.data.models.MovieResult
-import com.lonedev.moviecatalogue.data.models.TVSeriesResult
+import com.lonedev.moviecatalogue.data.models.*
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApi {
@@ -27,4 +26,17 @@ interface MovieApi {
         @Query("language") language: String
     ): Observable<Movie<TVSeriesResult>>
 
+    @GET("movie/{movie_id}/videos")
+    fun getMovieVideos(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String
+    ): Observable<Video<VideoResult>>
+
+    @GET("tv/{tv_id}/videos")
+    fun getTvVideos(
+        @Path("tv_id") tvId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String
+    ): Observable<Video<VideoResult>>
 }

@@ -21,8 +21,10 @@ import com.lonedev.moviecatalogue.data.models.Movie
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import com.lonedev.moviecatalogue.ui.adapter.ListAdapter
 import com.lonedev.moviecatalogue.ui.main.details.MovieDetailActivity
+import com.lonedev.moviecatalogue.ui.main.details.TVSeriesDetailActivity
 import com.lonedev.moviecatalogue.utils.OnItemClickListener
 import com.lonedev.moviecatalogue.utils.ViewModelFactory
+import kotlinx.android.synthetic.main.movie_fragment.*
 import javax.inject.Inject
 
 class TVSeriesFragment : BaseFragment() {
@@ -63,10 +65,13 @@ class TVSeriesFragment : BaseFragment() {
 
         recMovies.layoutManager = GridLayoutManager(getBaseActivity(), 2)
         recMovies.adapter = listAdapter
+
+        recMovies.visibility = View.VISIBLE
+        progress.visibility = View.GONE
     }
 
     private fun openMovieDetail(position: Int) {
-        val detail = Intent(getBaseActivity(), MovieDetailActivity::class.java)
+        val detail = Intent(getBaseActivity(), TVSeriesDetailActivity::class.java)
         detail.putExtra("tv", listAdapter.movies.results[position])
         startActivity(detail)
     }

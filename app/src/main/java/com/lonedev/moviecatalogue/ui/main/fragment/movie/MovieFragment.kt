@@ -23,6 +23,7 @@ import com.lonedev.moviecatalogue.ui.adapter.ListAdapter
 import com.lonedev.moviecatalogue.ui.main.details.MovieDetailActivity
 import com.lonedev.moviecatalogue.utils.OnItemClickListener
 import com.lonedev.moviecatalogue.utils.ViewModelFactory
+import kotlinx.android.synthetic.main.movie_fragment.*
 import javax.inject.Inject
 
 class MovieFragment : BaseFragment() {
@@ -63,6 +64,9 @@ class MovieFragment : BaseFragment() {
 
         recMovies.layoutManager = GridLayoutManager(getBaseActivity(), 2)
         recMovies.adapter = listAdapter
+
+        recMovies.visibility = View.VISIBLE
+        progress.visibility = View.GONE
     }
 
     private fun openMovieDetail(position: Int) {

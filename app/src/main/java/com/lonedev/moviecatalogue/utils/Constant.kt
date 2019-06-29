@@ -13,5 +13,7 @@ object Constant {
 
     const val W300 = "w300"
     const val WOriginal = "original"
+    const val VIDEO_URL = "https://www.youtube.com/watch?v="
+    const val THUMBNAIL = "https://img.youtube.com/vi/"
 
 }

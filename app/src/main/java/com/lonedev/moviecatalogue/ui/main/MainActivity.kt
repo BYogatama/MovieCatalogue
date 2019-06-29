@@ -18,6 +18,7 @@ import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseActivity
 import com.lonedev.moviecatalogue.ui.main.fragment.movie.MovieFragment
 import com.lonedev.moviecatalogue.ui.main.fragment.tv.TVSeriesFragment
+import kotlinx.android.synthetic.main.activity_detail_movies.*
 
 class MainActivity : BaseActivity() {
 
@@ -52,6 +53,8 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         ButterKnife.bind(this)
+
+        setSupportActionBar(toolbar)
 
         bottomNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         bottomNavigation.selectedItemId = R.id.navigation_movies

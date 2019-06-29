@@ -27,15 +27,15 @@ class TVSeriesResult(
     @SerializedName("first_air_date")
     val firstAirDate: String? = null,
     @SerializedName("backdrop_path")
-    val backdropPath: String? = null,
+    val backdropPath: String = "",
     @SerializedName("id")
-    val id: Int? = null,
+    val id: Int = -1,
     @SerializedName("vote_average")
     val voteAverage: Double? = null,
     @SerializedName("overview")
     val overview: String? = null,
     @SerializedName("poster_path")
-    val posterPath: String? = null
+    val posterPath: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString(),
@@ -46,7 +46,7 @@ class TVSeriesResult(
         source.readValue(Int::class.java.classLoader) as Int?,
         source.readString(),
         source.readString(),
-        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readInt(),
         source.readValue(Double::class.java.classLoader) as Double?,
         source.readString(),
         source.readString()
@@ -63,7 +63,7 @@ class TVSeriesResult(
         writeValue(voteCount)
         writeString(firstAirDate)
         writeString(backdropPath)
-        writeValue(id)
+        writeInt(id)
         writeValue(voteAverage)
         writeString(overview)
         writeString(posterPath)

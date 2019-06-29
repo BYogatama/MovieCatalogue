@@ -14,9 +14,7 @@ class MovieResult(
     @SerializedName("vote_count")
     val voteCount: Int? = null,
     @SerializedName("id")
-    val id: Int? = null,
-    @SerializedName("video")
-    val video: Boolean? = null,
+    val id: Int = -1,
     @SerializedName("vote_average")
     val voteAverage: Double? = null,
     @SerializedName("title")
@@ -24,15 +22,13 @@ class MovieResult(
     @SerializedName("popularity")
     val popularity: Double? = null,
     @SerializedName("poster_path")
-    val posterPath: String? = null,
+    val posterPath: String = "",
     @SerializedName("original_title")
     val originalTitle: String? = null,
     @SerializedName("genre_ids")
     val genreIds: List<Int>? = null,
     @SerializedName("backdrop_path")
-    val backdropPath: String? = null,
-    @SerializedName("adult")
-    val adult: Boolean? = null,
+    val backdropPath: String = "",
     @SerializedName("overview")
     val overview: String? = null,
     @SerializedName("release_date")
@@ -40,8 +36,7 @@ class MovieResult(
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readValue(Int::class.java.classLoader) as Int?,
-        source.readValue(Int::class.java.classLoader) as Int?,
-        source.readValue(Boolean::class.java.classLoader) as Boolean?,
+        source.readInt(),
         source.readValue(Double::class.java.classLoader) as Double?,
         source.readString(),
         source.readValue(Double::class.java.classLoader) as Double?,
@@ -49,7 +44,6 @@ class MovieResult(
         source.readString(),
         ArrayList<Int>().apply { source.readList(this, Int::class.java.classLoader) },
         source.readString(),
-        source.readValue(Boolean::class.java.classLoader) as Boolean?,
         source.readString(),
         source.readString()
     )
@@ -58,8 +52,7 @@ class MovieResult(
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeValue(voteCount)
-        writeValue(id)
-        writeValue(video)
+        writeInt(id)
         writeValue(voteAverage)
         writeString(title)
         writeValue(popularity)
@@ -67,7 +60,6 @@ class MovieResult(
         writeString(originalTitle)
         writeList(genreIds)
         writeString(backdropPath)
-        writeValue(adult)
         writeString(overview)
         writeString(releaseDate)
     }

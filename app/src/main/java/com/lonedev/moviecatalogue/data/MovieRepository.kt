@@ -8,6 +8,8 @@ package com.lonedev.moviecatalogue.data
 
 import com.lonedev.moviecatalogue.data.models.Movie
 import com.lonedev.moviecatalogue.data.models.MovieResult
+import com.lonedev.moviecatalogue.data.models.Video
+import com.lonedev.moviecatalogue.data.models.VideoResult
 import com.lonedev.moviecatalogue.data.remote.MovieApi
 import com.lonedev.moviecatalogue.utils.Constant
 import io.reactivex.Observable
@@ -25,10 +27,30 @@ class MovieRepository @Inject constructor(private val movieApi: MovieApi) {
      */
     fun getMoviesFromNetwork(): Observable<Movie<MovieResult>> {
 
-        val language = Locale.getDefault().toString()
-        language.replace("_","-")
+        var language = Locale.getDefault().toString()
+        language = language.replace("_","-")
+
+        // Not Every movie has indoneisan translation
+        if(language == "in-ID"){
+            language = "id-ID"
+        }
 
         return movieApi.getMovies(Constant.API_KEY, language)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getMovieVideos(movieId: Int): Observable<Video<VideoResult>> {
+
+        var language = Locale.getDefault().toString()
+        language = language.replace("_","-")
+
+        // No videos using Bahasa Indonesia so default is en-US for Videos
+        if(language == "in-ID"){
+            language = "en-US"
+        }
+
+        return movieApi.getMovieVideos(movieId, Constant.API_KEY, language)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
