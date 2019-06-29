@@ -7,6 +7,7 @@
 package com.lonedev.moviecatalogue.ui.main.fragment.tv
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -54,7 +55,7 @@ class TVSeriesFragment : BaseFragment() {
         getTVSeries()
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView(gridCount : Int) {
         listAdapter.requestManager = requestManager
 
         listAdapter.onItemClickListener = object : OnItemClickListener {
@@ -63,7 +64,7 @@ class TVSeriesFragment : BaseFragment() {
             }
         }
 
-        recMovies.layoutManager = GridLayoutManager(getBaseActivity(), 2)
+        recMovies.layoutManager = GridLayoutManager(getBaseActivity(), gridCount)
         recMovies.adapter = listAdapter
 
         recMovies.visibility = View.VISIBLE
@@ -82,7 +83,7 @@ class TVSeriesFragment : BaseFragment() {
         viewModel.tvSeriesResult().observe(this,
             Observer<Movie<TVSeriesResult>> {
                 listAdapter.movies = it
-                setupRecyclerView()
+                setupRecyclerView(2) // Default Grid Count
             })
 
         viewModel.tvSeriesError().observe(this, Observer<String> {
@@ -93,6 +94,16 @@ class TVSeriesFragment : BaseFragment() {
     override fun onDestroyView() {
         viewModel.disposeElements()
         super.onDestroyView()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setupRecyclerView(3)
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setupRecyclerView(2)
+        }
     }
 
 }

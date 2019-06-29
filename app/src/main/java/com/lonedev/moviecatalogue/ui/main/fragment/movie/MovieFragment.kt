@@ -7,6 +7,7 @@
 package com.lonedev.moviecatalogue.ui.main.fragment.movie
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -53,7 +54,7 @@ class MovieFragment : BaseFragment() {
         getMovies()
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView(gridCount : Int) {
         listAdapter.requestManager = requestManager
 
         listAdapter.onItemClickListener = object : OnItemClickListener {
@@ -62,7 +63,7 @@ class MovieFragment : BaseFragment() {
             }
         }
 
-        recMovies.layoutManager = GridLayoutManager(getBaseActivity(), 2)
+        recMovies.layoutManager = GridLayoutManager(getBaseActivity(), gridCount)
         recMovies.adapter = listAdapter
 
         recMovies.visibility = View.VISIBLE
@@ -81,7 +82,7 @@ class MovieFragment : BaseFragment() {
         viewModel.movieResult().observe(this,
             Observer<Movie<MovieResult>> {
                 listAdapter.movies = it
-                setupRecyclerView()
+                setupRecyclerView(2) // Default Grid Count is 2
             })
 
         viewModel.movieError().observe(this, Observer<String> {
@@ -92,5 +93,15 @@ class MovieFragment : BaseFragment() {
     override fun onDestroyView() {
         viewModel.disposeElements()
         super.onDestroyView()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setupRecyclerView(3)
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setupRecyclerView(2)
+        }
     }
 }
