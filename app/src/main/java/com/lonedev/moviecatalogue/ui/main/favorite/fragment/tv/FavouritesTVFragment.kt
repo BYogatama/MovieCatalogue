@@ -20,7 +20,7 @@ import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseFragment
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import com.lonedev.moviecatalogue.ui.adapter.ListAdapter
-import com.lonedev.moviecatalogue.ui.main.details.movie.MovieDetailActivity
+import com.lonedev.moviecatalogue.ui.main.details.tvseries.TVSeriesDetailActivity
 import com.lonedev.moviecatalogue.utils.OnItemClickListener
 import com.lonedev.moviecatalogue.utils.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_movie.*
@@ -70,8 +70,8 @@ class FavouritesTVFragment : BaseFragment() {
     }
 
     private fun openMovieDetail(position: Int) {
-        val detail = Intent(getBaseActivity(), MovieDetailActivity::class.java)
-        detail.putExtra("movie", listAdapter.movies[position])
+        val detail = Intent(getBaseActivity(), TVSeriesDetailActivity::class.java)
+        detail.putExtra("tv", listAdapter.movies[position])
         startActivity(detail)
     }
 
