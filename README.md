@@ -2,14 +2,14 @@
 
 This app is displaying list of Movies and TV Series from The Movie DB
 -----------------------------------------------------------
-##Building
+## Building
 Just run in Android Studio
 
-##Features
+## Features
 - List Of Movies & TV Series
 - Favorite Movies
 
-##Library
+## Library
 - Android Architecture Component
 - RxJava2
 - Retrofit2
