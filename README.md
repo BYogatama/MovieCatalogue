@@ -1,8 +1,6 @@
 # Movie Catalogue
-===========================================================
 
 This app is displaying list of Movies and TV Series from The Movie DB
-
 -----------------------------------------------------------
 ##Building
 Just run in Android Studio
