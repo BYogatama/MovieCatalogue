@@ -1,4 +1,10 @@
-package com.lonedev.moviecatalogue.ui.main.details
+/*
+ * Created by Bagus Yogatama on 6/29/19 9:02 PM
+ * Copyright (c) 2019 . All rights reserved.
+ * Last modified 6/29/19 11:37 AM
+ */
+
+package com.lonedev.moviecatalogue.ui.main.details.tvseries
 
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -6,6 +12,7 @@ import android.graphics.PorterDuffColorFilter
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,7 +22,7 @@ import butterknife.BindView
 import com.bumptech.glide.RequestManager
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseActivity
-import com.lonedev.moviecatalogue.data.models.MovieResult
+import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult
 import com.lonedev.moviecatalogue.ui.adapter.VideoAdapter
@@ -25,45 +32,51 @@ import com.lonedev.moviecatalogue.utils.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail_movies.*
 import javax.inject.Inject
 
-class MovieDetailActivity : BaseActivity() {
-
+class TVSeriesDetailActivity : BaseActivity() {
 
     @Inject
     lateinit var requestManager: RequestManager
     @Inject
     lateinit var factory: ViewModelFactory
 
-    private lateinit var viewModel: MovieDetailViewModel
+    private lateinit var viewModel: TVSeriesDetailViewModel
     private lateinit var videoAdapter: VideoAdapter
 
     @BindView(R.id.movie_trailer)
     lateinit var recVideos: RecyclerView
 
+    lateinit var tvSeries: TVSeriesResult
 
     override fun layoutResource(): Int {
         return R.layout.activity_detail_movies
+    }
+
+    override fun getRootView(): View {
+        return findViewById(R.id.coordinator)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupToolbar()
 
-        viewModel = ViewModelProviders.of(this, factory).get(MovieDetailViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory).get(TVSeriesDetailViewModel::class.java)
         videoAdapter = VideoAdapter(this)
 
-        val movie = intent.getParcelableExtra<MovieResult>("movie")
+        tvSeries = intent.getParcelableExtra<TVSeriesResult>("tv")
 
-        requestManager.load(generatreImageUrl(movie.backdropPath, Constant.WOriginal))
+        getFavoritedTVSeries(tvSeries.id)
+
+        requestManager.load(generateImageUrl(tvSeries.backdropPath, Constant.WOriginal))
             .into(movie_poster)
 
-        movie_title.text = movie.title
-        displayScore(movie)
+        movie_title.text = tvSeries.name
+        displayScore(tvSeries)
 
-        movie_release.text = formatDate(movie.releaseDate)
+        movie_release.text = formatDate(tvSeries.firstAirDate)
 
-        movie_overview.text = movie.overview
+        movie_overview.text = tvSeries.overview
 
-        getVideos(movieId = movie.id)
+        getVideos(tvSeriesId = tvSeries.id)
 
 
     }
@@ -74,8 +87,8 @@ class MovieDetailActivity : BaseActivity() {
         supportActionBar?.title = ""
     }
 
-    private fun displayScore(movie: MovieResult) {
-        val score: Int = movie.voteAverage?.times(10)!!.toInt()
+    private fun displayScore(tvSeries: TVSeriesResult) {
+        val score: Int = tvSeries.voteAverage?.times(10)!!.toInt()
         val scoreBackground = ContextCompat.getDrawable(this, R.drawable.score_frame)
 
 
@@ -117,18 +130,64 @@ class MovieDetailActivity : BaseActivity() {
         startActivity(openVideo)
     }
 
-    private fun getVideos(movieId: Int) {
-        viewModel.loadVideos(movieId)
+    private fun getVideos(tvSeriesId: Int) {
+        viewModel.getVideos(tvSeriesId)
 
-        viewModel.videoResult().observe(this,
+        viewModel.onGetVideoResult().observe(this,
             Observer<Video<VideoResult>> {
                 videoAdapter.videos = it
                 setupRecyclerView()
             })
 
-        viewModel.videoError().observe(this, Observer<String> {
-            //            displaySnackBar(it)
+        viewModel.onGetVideoError().observe(this, Observer<String> {
+            displaySnackBar(it)
         })
+    }
+
+    private fun getFavoritedTVSeries(tvSeriesId: Int) {
+        viewModel.getFavoritedTVSeries(tvSeriesId)
+
+        viewModel.onGetFavouritedResult().observe(this,
+            Observer {
+                if (tvSeries.id == it.id) {
+                    fab_favorites.setImageResource(R.drawable.ic_star_24dp)
+                    fab_favorites.setOnClickListener {
+                        deleteFavourites(tvSeries.id)
+                    }
+                }
+            })
+
+        viewModel.onGetFavouritedError().observe(this, Observer {
+            fab_favorites.setImageResource(R.drawable.ic_star_border_24dp)
+            fab_favorites.setOnClickListener {
+                saveFavourites(tvSeries.id)
+            }
+        })
+    }
+
+    private fun saveFavourites(tvSeriesId: Int) {
+        viewModel.saveFavourites(this, tvSeriesId)
+        viewModel.onSuccessSaveFavorites().observe(this, Observer {
+            fab_favorites.setImageResource(R.drawable.ic_star_24dp)
+            fab_favorites.setOnClickListener {
+                deleteFavourites(tvSeries.id)
+            }
+            displaySnackBar(it)
+            viewModel.disposeSaveFavourites()
+        })
+    }
+
+    private fun deleteFavourites(tvSeriesId: Int) {
+        viewModel.deleteFavourites(this, tvSeriesId)
+        viewModel.onSuccessDeleteFavorites().observe(this, Observer {
+            fab_favorites.setImageResource(R.drawable.ic_star_border_24dp)
+            fab_favorites.setOnClickListener {
+                saveFavourites(tvSeries.id)
+            }
+            displaySnackBar(it)
+            viewModel.disposeDeleteFavourites()
+        })
+
     }
 
     override fun onDestroy() {
@@ -142,4 +201,5 @@ class MovieDetailActivity : BaseActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

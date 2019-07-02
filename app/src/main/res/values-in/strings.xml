@@ -7,13 +7,13 @@
 
 <resources>
     <string name="release">Rilis</string>
-    <string name="genres">Jenis</string>
-    <string name="setting">Pengaturan</string>
+    <string name="setting">Setelan</string>
     <string name="movies">Film</string>
     <string name="overview">Ikhtisar</string>
-    <string name="status">Status</string>
-    <string name="language">Bahasa</string>
-    <string name="runtime">Waktu</string>
-    <string name="score">Skor</string>
     <string name="tv_series">Serial TV</string>
+    <string name="success_favourties">Berhasil Menyimpan ke Favorit</string>
+    <string name="failed_favourties">Gagal Menyimpan ke Favorit</string>
+    <string name="success_remove_favourites">Berhasil Menghapus Favorit</string>
+    <string name="failed_remove_favourites">Gagal Menghapus Favorit</string>
+    <string name="favorite">Favorit</string>
 </resources>

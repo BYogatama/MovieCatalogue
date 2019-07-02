@@ -1,8 +1,9 @@
 package com.lonedev.moviecatalogue.di.builders
 
-import com.lonedev.moviecatalogue.ui.main.MainActivity
-import com.lonedev.moviecatalogue.ui.main.details.MovieDetailActivity
-import com.lonedev.moviecatalogue.ui.main.details.TVSeriesDetailActivity
+import com.lonedev.moviecatalogue.ui.main.details.movie.MovieDetailActivity
+import com.lonedev.moviecatalogue.ui.main.details.tvseries.TVSeriesDetailActivity
+import com.lonedev.moviecatalogue.ui.main.favorite.fragment.FavoriteActivity
+import com.lonedev.moviecatalogue.ui.main.main.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -17,5 +18,8 @@ abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeTVSeriesDetailActivity(): TVSeriesDetailActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeFavoriteActivity(): FavoriteActivity
 
 }

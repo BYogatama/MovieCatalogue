@@ -8,13 +8,17 @@ package com.lonedev.moviecatalogue.data.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "movies")
 class MovieResult(
-    @SerializedName("vote_count")
-    val voteCount: Int? = null,
+    @PrimaryKey
     @SerializedName("id")
     val id: Int = -1,
+    @SerializedName("vote_count")
+    val voteCount: Int? = null,
     @SerializedName("vote_average")
     val voteAverage: Double? = null,
     @SerializedName("title")
@@ -35,15 +39,15 @@ class MovieResult(
     val releaseDate: String? = null
 ) : Parcelable {
     constructor(source: Parcel) : this(
-        source.readValue(Int::class.java.classLoader) as Int?,
         source.readInt(),
+        source.readValue(Int::class.java.classLoader) as Int?,
         source.readValue(Double::class.java.classLoader) as Double?,
         source.readString(),
         source.readValue(Double::class.java.classLoader) as Double?,
-        source.readString(),
+        source.readString()!!,
         source.readString(),
         ArrayList<Int>().apply { source.readList(this, Int::class.java.classLoader) },
-        source.readString(),
+        source.readString()!!,
         source.readString(),
         source.readString()
     )
@@ -51,8 +55,8 @@ class MovieResult(
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeValue(voteCount)
         writeInt(id)
+        writeValue(voteCount)
         writeValue(voteAverage)
         writeString(title)
         writeValue(popularity)

@@ -43,7 +43,7 @@ constructor(private val context: Context) : RecyclerView.Adapter<VideoAdapter.Vi
         holder.bind(video)
     }
 
-    fun getItem(position: Int) : VideoResult{
+    fun getItem(position: Int): VideoResult {
         return videos.results[position]
     }
 
@@ -64,7 +64,7 @@ constructor(private val context: Context) : RecyclerView.Adapter<VideoAdapter.Vi
 
         fun bind(video: VideoResult) {
 
-            val videoUrl = Constant.THUMBNAIL + video.key +"/0.jpg"
+            val videoUrl = "${Constant.THUMBNAIL}${video.key}/0.jpg"
 
             requestManager.load(videoUrl)
                 .into(thumbnail)

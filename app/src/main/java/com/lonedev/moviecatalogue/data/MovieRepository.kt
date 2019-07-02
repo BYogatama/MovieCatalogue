@@ -6,7 +6,7 @@
 
 package com.lonedev.moviecatalogue.data
 
-import com.lonedev.moviecatalogue.data.models.Movie
+import com.lonedev.moviecatalogue.data.local.dao.MoviesDao
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult
@@ -17,36 +17,60 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class MovieRepository @Inject constructor(private val movieApi: MovieApi) {
+@Singleton
+class MovieRepository @Inject constructor(
+    private val movieApi: MovieApi,
+    private val moviesDao: MoviesDao
+) {
+
+    fun getMovies(): Observable<List<MovieResult>> {
+        val observableFromNetwork = getMoviesFromNetwork()
+        val observableFromLocal = getMoviesFromLocal()
+        return Observable.concatArrayEager(observableFromNetwork, observableFromLocal)
+    }
 
     /**
-     * Get Movies from Network and return it as Observable<Movie<MovieResult>>
-     *     for usage in MovieViewModel. MemberApi is Injected using DI in this class
+     * Get Movies from Network and return it as Observable<List<MovieResult>>
+     *     for usage in MovieViewModel. MovieApi is Injected using DI in this class
      *     so it can be use directly in this class
      */
-    fun getMoviesFromNetwork(): Observable<Movie<MovieResult>> {
+    private fun getMoviesFromNetwork(): Observable<List<MovieResult>> {
 
         var language = Locale.getDefault().toString()
-        language = language.replace("_","-")
+        language = language.replace("_", "-")
 
-        // Not Every movie has indoneisan translation
-        if(language == "in-ID"){
+        if (language == "in-ID") {
             language = "id-ID"
         }
 
         return movieApi.getMovies(Constant.API_KEY, language)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                return@map it.results
+            }
+            .doOnNext {
+                for (item in it) {
+                    moviesDao.saveMovie(item)
+                }
+            }
+    }
+
+    /**
+     * Get Movies from LocalDB and return it as Observable<List<MovieResult>>
+     *     for usage in MovieViewModel. MovieDao is Injected using DI in this class
+     *     so it can be use directly in this class
+     */
+    private fun getMoviesFromLocal(): Observable<List<MovieResult>> {
+        return moviesDao.getMovies().toObservable()
     }
 
     fun getMovieVideos(movieId: Int): Observable<Video<VideoResult>> {
 
         var language = Locale.getDefault().toString()
-        language = language.replace("_","-")
+        language = language.replace("_", "-")
 
-        // No videos using Bahasa Indonesia so default is en-US for Videos
-        if(language == "in-ID"){
+        if (language == "in-ID") {
             language = "en-US"
         }
 

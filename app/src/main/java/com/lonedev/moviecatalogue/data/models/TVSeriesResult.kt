@@ -8,10 +8,15 @@ package com.lonedev.moviecatalogue.data.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-
+@Entity(tableName = "tvseries")
 class TVSeriesResult(
+    @PrimaryKey
+    @SerializedName("id")
+    val id: Int = -1,
     @SerializedName("original_name")
     val originalName: String? = null,
     @SerializedName("genre_ids")
@@ -28,8 +33,6 @@ class TVSeriesResult(
     val firstAirDate: String? = null,
     @SerializedName("backdrop_path")
     val backdropPath: String = "",
-    @SerializedName("id")
-    val id: Int = -1,
     @SerializedName("vote_average")
     val voteAverage: Double? = null,
     @SerializedName("overview")
@@ -38,6 +41,7 @@ class TVSeriesResult(
     val posterPath: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
+        source.readInt(),
         source.readString(),
         ArrayList<Int>().apply { source.readList(this, Int::class.java.classLoader) },
         source.readString(),
@@ -45,16 +49,16 @@ class TVSeriesResult(
         source.createStringArrayList(),
         source.readValue(Int::class.java.classLoader) as Int?,
         source.readString(),
-        source.readString(),
-        source.readInt(),
+        source.readString()!!,
         source.readValue(Double::class.java.classLoader) as Double?,
         source.readString(),
-        source.readString()
+        source.readString()!!
     )
 
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeInt(id)
         writeString(originalName)
         writeList(genreIds)
         writeString(name)
@@ -63,7 +67,6 @@ class TVSeriesResult(
         writeValue(voteCount)
         writeString(firstAirDate)
         writeString(backdropPath)
-        writeInt(id)
         writeValue(voteAverage)
         writeString(overview)
         writeString(posterPath)

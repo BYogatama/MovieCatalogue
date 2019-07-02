@@ -12,7 +12,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.MainActivity"
+        <activity android:name=".ui.main.main.MainActivity"
                   android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -20,8 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.details.MovieDetailActivity"/>
-        <activity android:name=".ui.main.details.TVSeriesDetailActivity"/>
+        <activity android:name=".ui.main.details.movie.MovieDetailActivity"/>
+        <activity android:name=".ui.main.details.tvseries.TVSeriesDetailActivity"/>
+        <activity android:name=".ui.main.favorite.fragment.FavoriteActivity"/>
     </application>
 
 </manifest>

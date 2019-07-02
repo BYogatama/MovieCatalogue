@@ -1,10 +1,10 @@
 /*
- * Created by Bagus Yogatama on 6/28/19 10:40 PM
+ * Created by Bagus Yogatama on 7/2/19 2:23 PM
  * Copyright (c) 2019 . All rights reserved.
- * Last modified 6/28/19 8:48 PM
+ * Last modified 6/30/19 1:55 PM
  */
 
-package com.lonedev.moviecatalogue.ui.main.fragment.tv
+package com.lonedev.moviecatalogue.ui.main.main.fragment.movie
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -18,41 +18,39 @@ import butterknife.BindView
 import com.bumptech.glide.RequestManager
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseFragment
-import com.lonedev.moviecatalogue.data.models.Movie
-import com.lonedev.moviecatalogue.data.models.TVSeriesResult
+import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.ui.adapter.ListAdapter
-import com.lonedev.moviecatalogue.ui.main.details.MovieDetailActivity
-import com.lonedev.moviecatalogue.ui.main.details.TVSeriesDetailActivity
+import com.lonedev.moviecatalogue.ui.main.details.movie.MovieDetailActivity
 import com.lonedev.moviecatalogue.utils.OnItemClickListener
 import com.lonedev.moviecatalogue.utils.ViewModelFactory
-import kotlinx.android.synthetic.main.movie_fragment.*
+import kotlinx.android.synthetic.main.fragment_movie.*
 import javax.inject.Inject
 
-class TVSeriesFragment : BaseFragment() {
+class MovieFragment : BaseFragment() {
 
     @Inject
     lateinit var requestManager: RequestManager
     @Inject
     lateinit var factory: ViewModelFactory
 
-    private lateinit var viewModel: TVSeriesViewModel
-    private lateinit var listAdapter: ListAdapter<TVSeriesResult>
+    private lateinit var viewModel: MovieViewModel
+    private lateinit var listAdapter: ListAdapter<MovieResult>
 
     @BindView(R.id.list_item)
     lateinit var recMovies: RecyclerView
 
     override fun layoutResources(): Int {
-        return R.layout.tvshow_fragment
+        return R.layout.fragment_movie
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this, factory).get(TVSeriesViewModel::class.java)
 
+        viewModel = ViewModelProviders.of(this, factory).get(MovieViewModel::class.java)
 
         listAdapter = ListAdapter(getBaseActivity())
 
-        getTVSeries()
+        getMovies()
     }
 
     private fun setupRecyclerView(gridCount : Int) {
@@ -72,21 +70,19 @@ class TVSeriesFragment : BaseFragment() {
     }
 
     private fun openMovieDetail(position: Int) {
-        val detail = Intent(getBaseActivity(), TVSeriesDetailActivity::class.java)
-        detail.putExtra("tv", listAdapter.movies.results[position])
+        val detail = Intent(getBaseActivity(), MovieDetailActivity::class.java)
+        detail.putExtra("movie", listAdapter.movies[position])
         startActivity(detail)
     }
 
-    private fun getTVSeries() {
-        viewModel.loadTVSeries()
-
-        viewModel.tvSeriesResult().observe(this,
-            Observer<Movie<TVSeriesResult>> {
+    private fun getMovies() {
+        viewModel.getMovies()
+        viewModel.onSuccessGetMovies().observe(this,
+            Observer<List<MovieResult>> {
                 listAdapter.movies = it
-                setupRecyclerView(2) // Default Grid Count
+                setupRecyclerView(2)
             })
-
-        viewModel.tvSeriesError().observe(this, Observer<String> {
+        viewModel.onErrorGetMovies().observe(this, Observer<String> {
             displaySnackBar(it)
         })
     }
@@ -105,5 +101,4 @@ class TVSeriesFragment : BaseFragment() {
             setupRecyclerView(2)
         }
     }
-
 }

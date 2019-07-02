@@ -7,14 +7,17 @@
 package com.lonedev.moviecatalogue.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.lonedev.moviecatalogue.ui.main.details.MovieDetailViewModel
-import com.lonedev.moviecatalogue.ui.main.details.TVSeriesDetailViewModel
-import com.lonedev.moviecatalogue.ui.main.fragment.movie.MovieViewModel
-import com.lonedev.moviecatalogue.ui.main.fragment.tv.TVSeriesViewModel
+import com.lonedev.moviecatalogue.ui.main.details.movie.MovieDetailViewModel
+import com.lonedev.moviecatalogue.ui.main.details.tvseries.TVSeriesDetailViewModel
+import com.lonedev.moviecatalogue.ui.main.favorite.fragment.movie.FavouritesMoviesViewModel
+import com.lonedev.moviecatalogue.ui.main.favorite.fragment.tv.FavouritesTVViewModel
+import com.lonedev.moviecatalogue.ui.main.main.fragment.movie.MovieViewModel
+import com.lonedev.moviecatalogue.ui.main.main.fragment.tv.TVSeriesViewModel
 import com.schoters.androidapp.di.util.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import javax.inject.Singleton
 
 @Module
 abstract class ViewModelModule {
@@ -37,4 +40,14 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TVSeriesDetailViewModel::class)
     abstract fun bindTVSeriesDetailViewModel(tvSeriesDetailViewModel: TVSeriesDetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavouritesMoviesViewModel::class)
+    abstract fun bindFavouritesMoviesViewModel(favouritesMoviesViewModel: FavouritesMoviesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavouritesTVViewModel::class)
+    abstract fun bindFavouritesTVViewModel(favouritesTVViewModel: FavouritesTVViewModel): ViewModel
 }

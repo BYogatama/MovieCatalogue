@@ -12,22 +12,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bumptech.glide.RequestManager
 import com.lonedev.moviecatalogue.R
-import com.lonedev.moviecatalogue.data.models.Movie
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import com.lonedev.moviecatalogue.utils.Constant
 import com.lonedev.moviecatalogue.utils.OnItemClickListener
 
 class ListAdapter<T : Parcelable>
-constructor(private val context: Context) :
-    RecyclerView.Adapter<ListAdapter.MovieViewHolder<T>>() {
+constructor(private val context: Context) : RecyclerView.Adapter<ListAdapter.MovieViewHolder<T>>() {
 
-    lateinit var movies: Movie<T>
+    lateinit var movies: List<T>
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var requestManager: RequestManager
 
@@ -37,11 +36,11 @@ constructor(private val context: Context) :
     }
 
     override fun getItemCount(): Int {
-        return movies.results.size
+        return movies.size
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder<T>, position: Int) {
-        val movie = movies.results[position]
+        val movie = movies[position]
         holder.bind(movie)
     }
 
@@ -54,6 +53,8 @@ constructor(private val context: Context) :
 
         @BindView(R.id.movie_poster)
         lateinit var moviePoster: ImageView
+        @BindView(R.id.movie_title)
+        lateinit var movieTitle: TextView
 
         init {
             ButterKnife.bind(this, itemView)
@@ -62,14 +63,17 @@ constructor(private val context: Context) :
 
         fun bind(movie: T) {
 
-            var imageUrl = Constant.IMAGE_URL + Constant.W300
+            var imageUrl = "${Constant.IMAGE_URL}${Constant.W300}"
 
-            imageUrl += if (movie::class.java == MovieResult::class.java) {
+            if (movie::class.java == MovieResult::class.java) {
                 val m = movie as MovieResult
-                m.posterPath
+                imageUrl += m.posterPath
+                movieTitle.text = movie.title
+
             } else {
                 val m = movie as TVSeriesResult
-                m.posterPath
+                imageUrl += m.posterPath
+                movieTitle.text = movie.name
             }
 
             requestManager.load(imageUrl)

@@ -1,30 +1,31 @@
 /*
- * Created by Bagus Yogatama on 6/28/19 10:44 PM
+ * Created by Bagus Yogatama on 7/2/19 4:08 PM
  * Copyright (c) 2019 . All rights reserved.
- * Last modified 6/28/19 10:41 PM
+ * Last modified 7/2/19 2:23 PM
  */
 
-package com.lonedev.moviecatalogue.ui.main.fragment.tv
+package com.lonedev.moviecatalogue.ui.main.main.fragment.tv
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lonedev.moviecatalogue.data.TVSeriesRepository
-import com.lonedev.moviecatalogue.data.models.Movie
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TVSeriesViewModel @Inject constructor(private val tvSeriesRepository: TVSeriesRepository) : ViewModel() {
 
-    var tvSeriesResult: MutableLiveData<Movie<TVSeriesResult>> = MutableLiveData()
+    var tvSeriesResult: MutableLiveData<List<TVSeriesResult>> = MutableLiveData()
     var tvSeriesError: MutableLiveData<String> = MutableLiveData()
-    lateinit var disposableObserver: DisposableObserver<Movie<TVSeriesResult>>
+    lateinit var disposableObserver: DisposableObserver<List<TVSeriesResult>>
 
-    fun tvSeriesResult(): LiveData<Movie<TVSeriesResult>> {
+    fun tvSeriesResult(): LiveData<List<TVSeriesResult>> {
         return tvSeriesResult
     }
 
@@ -34,11 +35,11 @@ class TVSeriesViewModel @Inject constructor(private val tvSeriesRepository: TVSe
 
     fun loadTVSeries() {
 
-        disposableObserver = object : DisposableObserver<Movie<TVSeriesResult>>() {
+        disposableObserver = object : DisposableObserver<List<TVSeriesResult>>() {
             override fun onComplete() {
             }
 
-            override fun onNext(tvSeries: Movie<TVSeriesResult>) {
+            override fun onNext(tvSeries: List<TVSeriesResult>) {
                 tvSeriesResult.postValue(tvSeries)
             }
 
@@ -47,7 +48,7 @@ class TVSeriesViewModel @Inject constructor(private val tvSeriesRepository: TVSe
             }
         }
 
-        tvSeriesRepository.getTVSeriesFromNetwork()
+        tvSeriesRepository.getTvSeries()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(400, TimeUnit.MILLISECONDS)
