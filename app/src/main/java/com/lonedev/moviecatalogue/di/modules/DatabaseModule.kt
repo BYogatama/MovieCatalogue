@@ -10,6 +10,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.lonedev.moviecatalogue.BuildConfig
 import com.lonedev.moviecatalogue.data.local.AppDatabase
 import com.lonedev.moviecatalogue.data.local.dao.FavouritesDao
 import com.lonedev.moviecatalogue.data.local.dao.MoviesDao
@@ -35,7 +36,7 @@ class DatabaseModule {
         return Room.databaseBuilder(
             context,
             AppDatabase::class.java,
-            "app_db"
+            BuildConfig.DB_NAME
         )
             .addMigrations(MIGRATION_1_2)
             .build()

@@ -6,6 +6,7 @@
 
 package com.lonedev.moviecatalogue.data.models
 
+import android.database.Cursor
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
@@ -19,14 +20,10 @@ class TVSeriesResult(
     val id: Int = -1,
     @SerializedName("original_name")
     val originalName: String? = null,
-    @SerializedName("genre_ids")
-    val genreIds: List<Int>? = null,
     @SerializedName("name")
     val name: String? = null,
     @SerializedName("popularity")
     val popularity: Double? = null,
-    @SerializedName("origin_country")
-    val originCountry: List<String>? = null,
     @SerializedName("vote_count")
     val voteCount: Int? = null,
     @SerializedName("first_air_date")
@@ -43,16 +40,14 @@ class TVSeriesResult(
     constructor(source: Parcel) : this(
         source.readInt(),
         source.readString(),
-        ArrayList<Int>().apply { source.readList(this, Int::class.java.classLoader) },
         source.readString(),
         source.readValue(Double::class.java.classLoader) as Double?,
-        source.createStringArrayList(),
         source.readValue(Int::class.java.classLoader) as Int?,
         source.readString(),
-        source.readString()!!,
+        source.readString(),
         source.readValue(Double::class.java.classLoader) as Double?,
         source.readString(),
-        source.readString()!!
+        source.readString()
     )
 
     override fun describeContents() = 0
@@ -60,10 +55,8 @@ class TVSeriesResult(
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeInt(id)
         writeString(originalName)
-        writeList(genreIds)
         writeString(name)
         writeValue(popularity)
-        writeStringList(originCountry)
         writeValue(voteCount)
         writeString(firstAirDate)
         writeString(backdropPath)
@@ -79,4 +72,17 @@ class TVSeriesResult(
             override fun newArray(size: Int): Array<TVSeriesResult?> = arrayOfNulls(size)
         }
     }
+
+    constructor(cursor: Cursor): this(
+        cursor.getInt(0),
+        cursor.getString(1),
+        cursor.getString(2),
+        cursor.getDouble(3),
+        cursor.getInt(4),
+        cursor.getString(5),
+        cursor.getString(6),
+        cursor.getDouble(7),
+        cursor.getString(8),
+        cursor.getString(9)
+    )
 }

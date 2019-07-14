@@ -6,6 +6,7 @@
 
 package com.lonedev.moviecatalogue.data.local.dao
 
+import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -37,4 +38,25 @@ interface FavouritesDao {
 
     @Query("SELECT * FROM tvseries WHERE tvseries.id=(SELECT favId FROM favourites WHERE favId=:tvSeriesId)")
     fun getFavoritedTVSeries(tvSeriesId: Int): Single<TVSeriesResult>
+
+
+    // Content Resolver
+    @Query("SELECT * FROM movies WHERE movies.id IN (SELECT favId FROM favourites)")
+    fun getFavouriteMoviesCursor(): Cursor
+
+    @Query("SELECT * FROM tvseries WHERE tvseries.id IN (SELECT favId FROM favourites)")
+    fun getFavouriteTVSeriesCursor(): Cursor
+
+    @Query("SELECT * FROM movies WHERE movies.id=(SELECT favId FROM favourites WHERE favId=:movieId )")
+    fun getFavoritedMoviesCursor(movieId: Long): Cursor
+
+    @Query("SELECT * FROM tvseries WHERE tvseries.id=(SELECT favId FROM favourites WHERE favId=:tvSeriesId )")
+    fun getFavoritedTVCursor(tvSeriesId: Long): Cursor
+
+    @Query("DELETE FROM favourites WHERE favId=:favId")
+    fun deleteFavouriteCursor(favId: Long) : Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveFavouriteCursor(favourites: Favourites) : Long
+
 }

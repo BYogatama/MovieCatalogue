@@ -6,6 +6,8 @@
 
 package com.lonedev.moviecatalogue.ui.main.details.movie
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -26,6 +28,7 @@ import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult
 import com.lonedev.moviecatalogue.ui.adapter.VideoAdapter
+import com.lonedev.moviecatalogue.ui.widget.TheMovieWidget
 import com.lonedev.moviecatalogue.utils.Constant
 import com.lonedev.moviecatalogue.utils.OnItemClickListener
 import com.lonedev.moviecatalogue.utils.ViewModelFactory
@@ -47,6 +50,8 @@ class MovieDetailActivity : BaseActivity() {
 
     lateinit var movie: MovieResult
 
+    lateinit var appWidgetManager: AppWidgetManager
+
 
     override fun layoutResource(): Int {
         return R.layout.activity_detail_movies
@@ -60,6 +65,8 @@ class MovieDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupToolbar()
+
+        appWidgetManager = AppWidgetManager.getInstance(this)
 
         viewModel = ViewModelProviders.of(this, factory).get(MovieDetailViewModel::class.java)
         videoAdapter = VideoAdapter(this)
@@ -79,7 +86,6 @@ class MovieDetailActivity : BaseActivity() {
         movie_overview.text = movie.overview
 
         getVideos(movieId = movie.id)
-
 
     }
 
@@ -156,6 +162,7 @@ class MovieDetailActivity : BaseActivity() {
                     fab_favorites.setImageResource(R.drawable.ic_star_24dp)
                     fab_favorites.setOnClickListener {
                         deleteFavourites(movie.id)
+                        TheMovieWidget.refreshWidget(this)
                     }
                 }
             })
@@ -164,6 +171,7 @@ class MovieDetailActivity : BaseActivity() {
             fab_favorites.setImageResource(R.drawable.ic_star_border_24dp)
             fab_favorites.setOnClickListener {
                 saveFavourites(movie.id)
+                TheMovieWidget.refreshWidget(this)
             }
         })
     }
@@ -205,4 +213,5 @@ class MovieDetailActivity : BaseActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

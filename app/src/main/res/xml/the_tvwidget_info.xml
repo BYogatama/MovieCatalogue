@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Bagus Yogatama on 7/9/19 10:19 PM
+  ~ Copyright (c) 2019 . All rights reserved.
+  ~ Last modified 7/9/19 10:19 PM
+  -->
+
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:minWidth="180dp"
+                    android:minHeight="180dp"
+                    android:updatePeriodMillis="0"
+                    android:previewImage="@drawable/the_tv_widget_preview"
+                    android:initialLayout="@layout/the_tvwidget"
+                    android:resizeMode="horizontal|vertical"
+                    android:widgetCategory="home_screen"
+                    android:initialKeyguardLayout="@layout/the_tvwidget"/>

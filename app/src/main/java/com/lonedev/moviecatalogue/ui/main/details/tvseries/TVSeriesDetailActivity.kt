@@ -26,6 +26,7 @@ import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult
 import com.lonedev.moviecatalogue.ui.adapter.VideoAdapter
+import com.lonedev.moviecatalogue.ui.widget.TheTVWidget
 import com.lonedev.moviecatalogue.utils.Constant
 import com.lonedev.moviecatalogue.utils.OnItemClickListener
 import com.lonedev.moviecatalogue.utils.ViewModelFactory
@@ -153,6 +154,7 @@ class TVSeriesDetailActivity : BaseActivity() {
                     fab_favorites.setImageResource(R.drawable.ic_star_24dp)
                     fab_favorites.setOnClickListener {
                         deleteFavourites(tvSeries.id)
+                        TheTVWidget.refreshWidget(this)
                     }
                 }
             })
@@ -161,6 +163,7 @@ class TVSeriesDetailActivity : BaseActivity() {
             fab_favorites.setImageResource(R.drawable.ic_star_border_24dp)
             fab_favorites.setOnClickListener {
                 saveFavourites(tvSeries.id)
+                TheTVWidget.refreshWidget(this)
             }
         })
     }

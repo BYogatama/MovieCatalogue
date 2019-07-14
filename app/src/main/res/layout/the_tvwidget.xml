@@ -1,0 +1,53 @@
+<!--
+  ~ Created by Bagus Yogatama on 7/7/19 5:00 PM
+  ~ Copyright (c) 2019 . All rights reserved.
+  ~ Last modified 7/7/19 5:00 PM
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_widget_title"
+                android:text="@string/favourites_tv"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:paddingEnd="20dp"
+                android:paddingStart="20dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+
+
+        <StackView
+                android:id="@+id/stack_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:loopViews="true"
+                android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/colorAccent"
+            android:text="@string/no_favourites_tvs"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:visibility="gone"/>
+
+</FrameLayout>

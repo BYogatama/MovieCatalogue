@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.firebase.jobdispatcher.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseActivity
@@ -22,10 +23,13 @@ import com.lonedev.moviecatalogue.ui.main.main.fragment.movie.MovieFragment
 import com.lonedev.moviecatalogue.ui.main.main.fragment.tv.TVSeriesFragment
 import kotlinx.android.synthetic.main.activity_detail_movies.*
 
+
 class MainActivity : BaseActivity() {
 
     @BindView(R.id.bottom_navigation)
     lateinit var bottomNavigation: BottomNavigationView
+
+    lateinit var jobDispatcher: FirebaseJobDispatcher
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -82,4 +86,6 @@ class MainActivity : BaseActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }

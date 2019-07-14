@@ -8,12 +8,11 @@ package com.lonedev.moviecatalogue.utils
 
 object Constant {
 
-    const val API_KEY = "fd4fe80fe4abc195d3e6e2eced4e241e"
     const val IMAGE_URL = "https://image.tmdb.org/t/p/"
-
     const val W300 = "w300"
     const val WOriginal = "original"
+
     const val VIDEO_URL = "https://www.youtube.com/watch?v="
-    const val THUMBNAIL = "https://img.youtube.com/vi/"
+    const val VIDEO_THUMBNAIL = "https://img.youtube.com/vi/"
 
 }

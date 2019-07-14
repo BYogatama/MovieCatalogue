@@ -6,6 +6,7 @@
 
 package com.lonedev.moviecatalogue.data.models
 
+import android.database.Cursor
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
@@ -29,8 +30,6 @@ class MovieResult(
     val posterPath: String = "",
     @SerializedName("original_title")
     val originalTitle: String? = null,
-    @SerializedName("genre_ids")
-    val genreIds: List<Int>? = null,
     @SerializedName("backdrop_path")
     val backdropPath: String = "",
     @SerializedName("overview")
@@ -44,10 +43,9 @@ class MovieResult(
         source.readValue(Double::class.java.classLoader) as Double?,
         source.readString(),
         source.readValue(Double::class.java.classLoader) as Double?,
-        source.readString()!!,
         source.readString(),
-        ArrayList<Int>().apply { source.readList(this, Int::class.java.classLoader) },
-        source.readString()!!,
+        source.readString(),
+        source.readString(),
         source.readString(),
         source.readString()
     )
@@ -62,7 +60,6 @@ class MovieResult(
         writeValue(popularity)
         writeString(posterPath)
         writeString(originalTitle)
-        writeList(genreIds)
         writeString(backdropPath)
         writeString(overview)
         writeString(releaseDate)
@@ -75,4 +72,18 @@ class MovieResult(
             override fun newArray(size: Int): Array<MovieResult?> = arrayOfNulls(size)
         }
     }
+
+
+    constructor(cursor: Cursor): this(
+        cursor.getInt(0),
+        cursor.getInt(1),
+        cursor.getDouble(2),
+        cursor.getString(3),
+        cursor.getDouble(4),
+        cursor.getString(5),
+        cursor.getString(6),
+        cursor.getString(7),
+        cursor.getString(8),
+        cursor.getString(9)
+        )
 }
