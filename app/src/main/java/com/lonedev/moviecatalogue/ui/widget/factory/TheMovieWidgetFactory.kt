@@ -8,8 +8,10 @@ package com.lonedev.moviecatalogue.ui.widget.factory
 
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.os.Binder
+import android.os.Bundle
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.bumptech.glide.Glide
@@ -18,6 +20,7 @@ import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.provider.FavoriteMovieProvider
 import com.lonedev.moviecatalogue.utils.Constant
+
 
 class TheMovieWidgetFactory constructor(private val context: Context) : RemoteViewsService.RemoteViewsFactory {
 
@@ -37,15 +40,15 @@ class TheMovieWidgetFactory constructor(private val context: Context) : RemoteVi
     }
 
     override fun onDataSetChanged() {
-            val identityToken = Binder.clearCallingIdentity()
-            try {
-                cursor = contentResolver.query(
-                    FavoriteMovieProvider.URI_FAVOURTIES,
-                    null, null, null, null, null
-                )
-            } finally {
-                Binder.restoreCallingIdentity(identityToken)
-            }
+        val identityToken = Binder.clearCallingIdentity()
+        try {
+            cursor = contentResolver.query(
+                FavoriteMovieProvider.URI_FAVOURTIES,
+                null, null, null, null, null
+            )
+        } finally {
+            Binder.restoreCallingIdentity(identityToken)
+        }
     }
 
     override fun hasStableIds(): Boolean {
@@ -59,6 +62,13 @@ class TheMovieWidgetFactory constructor(private val context: Context) : RemoteVi
 
         val imgUrl = "${Constant.IMAGE_URL}${Constant.W300}${movie?.posterPath}"
 
+        val fillIntent = Intent()
+        val bundleExtras = Bundle().apply {
+            putParcelable("movie", movie)
+        }
+
+        fillIntent.putExtra("movie", bundleExtras)
+
         val bitmap = Glide.with(context.applicationContext)
             .asBitmap()
             .load(imgUrl)
@@ -66,6 +76,7 @@ class TheMovieWidgetFactory constructor(private val context: Context) : RemoteVi
 
         remoteViews.setImageViewBitmap(R.id.movie_poster, bitmap)
         remoteViews.setTextViewText(R.id.movie_title, movie?.title)
+        remoteViews.setOnClickFillInIntent(R.id.movie_poster, fillIntent)
 
         return remoteViews
     }

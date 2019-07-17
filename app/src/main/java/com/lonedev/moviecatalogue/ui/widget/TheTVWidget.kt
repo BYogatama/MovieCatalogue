@@ -6,6 +6,7 @@
 
 package com.lonedev.moviecatalogue.ui.widget
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -14,6 +15,8 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.RemoteViews
 import com.lonedev.moviecatalogue.R
+import com.lonedev.moviecatalogue.ui.main.details.movie.MovieDetailActivity
+import com.lonedev.moviecatalogue.ui.main.details.tvseries.TVSeriesDetailActivity
 import com.lonedev.moviecatalogue.ui.widget.services.TheTVWidgetService
 
 class TheTVWidget : AppWidgetProvider() {
@@ -33,14 +36,37 @@ class TheTVWidget : AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent?) {
         val action = intent?.action
         if (action == AppWidgetManager.ACTION_APPWIDGET_UPDATE) {
-            val mgr = AppWidgetManager.getInstance(context)
-            val cn = ComponentName(context!!, TheTVWidget::class.java)
-            mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.stack_view)
+            updateWidgetData(context)
+        } else if (action == TheMovieWidget.ACTION_CLICK) {
+            openDetail(intent, context)
+
         }
         super.onReceive(context, intent)
     }
 
+    private fun openDetail(intent: Intent, context: Context?) {
+        val bundle = intent.getBundleExtra(EXTRA_TV)
+
+        val detailIntent = Intent(context, TVSeriesDetailActivity::class.java).apply {
+            putExtra("bundle", bundle)
+        }
+
+        context?.startActivity(detailIntent)
+    }
+
+    private fun updateWidgetData(context: Context?) {
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val componentName = ComponentName(context!!, TheTVWidget::class.java)
+        appWidgetManager.notifyAppWidgetViewDataChanged(
+            appWidgetManager.getAppWidgetIds(componentName), R
+                .id.stack_view
+        )
+    }
+
     companion object {
+
+        const val ACTION_CLICK = "actionClick"
+        const val EXTRA_TV = "tv"
 
         internal fun updateAppWidget(
             context: Context, appWidgetManager: AppWidgetManager,
@@ -49,9 +75,18 @@ class TheTVWidget : AppWidgetProvider() {
             val intent = Intent(context, TheTVWidgetService::class.java)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
 
+            val clickIntent = Intent(context, TheTVWidget::class.java).apply {
+                action = ACTION_CLICK
+            }
+            val clickPendingIntent = PendingIntent.getBroadcast(
+                context, 0, clickIntent, 0
+            )
+
             val views = RemoteViews(context.packageName, R.layout.the_tvwidget)
             views.setRemoteAdapter(R.id.stack_view, intent)
             views.setEmptyView(R.id.stack_view, R.id.empty_view)
+            views.setPendingIntentTemplate(R.id.stack_view, clickPendingIntent)
+
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }

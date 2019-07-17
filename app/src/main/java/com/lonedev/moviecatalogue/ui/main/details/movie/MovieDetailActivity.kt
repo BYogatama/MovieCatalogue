@@ -7,7 +7,6 @@
 package com.lonedev.moviecatalogue.ui.main.details.movie
 
 import android.appwidget.AppWidgetManager
-import android.content.ComponentName
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -71,7 +70,12 @@ class MovieDetailActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this, factory).get(MovieDetailViewModel::class.java)
         videoAdapter = VideoAdapter(this)
 
-        movie = intent.getParcelableExtra("movie")
+        movie = if (intent.getParcelableExtra<MovieResult>("movie") != null) {
+            intent.getParcelableExtra("movie")
+        } else {
+            val bundle = intent.getBundleExtra("bundle")
+            bundle.getParcelable("movie")
+        }
 
         getFavoritedMovies(movie.id)
 

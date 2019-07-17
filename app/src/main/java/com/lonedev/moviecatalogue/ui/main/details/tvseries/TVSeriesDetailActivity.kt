@@ -22,6 +22,7 @@ import butterknife.BindView
 import com.bumptech.glide.RequestManager
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseActivity
+import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult
@@ -63,7 +64,12 @@ class TVSeriesDetailActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this, factory).get(TVSeriesDetailViewModel::class.java)
         videoAdapter = VideoAdapter(this)
 
-        tvSeries = intent.getParcelableExtra("tv")
+        tvSeries = if (intent.getParcelableExtra<TVSeriesResult>("tv") != null) {
+            intent.getParcelableExtra("tv")
+        } else {
+            val bundle = intent.getBundleExtra("bundle")
+            bundle.getParcelable("tv")
+        }
 
         getFavoritedTVSeries(tvSeries.id)
 
