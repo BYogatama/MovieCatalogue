@@ -19,4 +19,7 @@
     <string name="daily_reminder">Daily Reminder</string>
     <string name="release_reminder">Release Reminder</string>
     <string name="notifications">Notifications</string>
+    <string name="release_reminder_message">Hi, today %s is released</string>
+    <string name="tv_release_reminder">TV Release Reminder</string>
+    <string name="movie_release_reminder">Movie Release Reminder</string>
 </resources>

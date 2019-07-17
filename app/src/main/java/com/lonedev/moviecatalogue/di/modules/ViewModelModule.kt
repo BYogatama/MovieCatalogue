@@ -13,11 +13,11 @@ import com.lonedev.moviecatalogue.ui.main.favorite.fragment.movie.FavouritesMovi
 import com.lonedev.moviecatalogue.ui.main.favorite.fragment.tv.FavouritesTVViewModel
 import com.lonedev.moviecatalogue.ui.main.main.fragment.movie.MovieViewModel
 import com.lonedev.moviecatalogue.ui.main.main.fragment.tv.TVSeriesViewModel
+import com.lonedev.moviecatalogue.ui.main.settings.SettingsViewModel
 import com.schoters.androidapp.di.util.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import javax.inject.Singleton
 
 @Module
 abstract class ViewModelModule {
@@ -50,4 +50,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FavouritesTVViewModel::class)
     abstract fun bindFavouritesTVViewModel(favouritesTVViewModel: FavouritesTVViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    abstract fun bindSettingsViewModel(settingsViewModel: SettingsViewModel): ViewModel
 }

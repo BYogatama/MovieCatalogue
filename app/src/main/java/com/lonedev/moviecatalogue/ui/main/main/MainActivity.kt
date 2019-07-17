@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.preference.PreferenceManager
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -71,6 +70,19 @@ class MainActivity : BaseActivity() {
         bottomNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         bottomNavigation.selectedItemId = R.id.navigation_movies
 
+        getDefaultSettings()
+
+    }
+
+    private fun getDefaultSettings() {
+        val sharedPreference = PreferenceManager.getDefaultSharedPreferences(this)
+        val isDailyReminderOn = sharedPreference.getBoolean("daily_reminder", false)
+
+        if (isDailyReminderOn) {
+            Preferences.setupDailyReminder(this)
+        } else {
+            Preferences.disableDailyReminder(this)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

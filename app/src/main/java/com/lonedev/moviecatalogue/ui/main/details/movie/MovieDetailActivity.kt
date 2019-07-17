@@ -7,7 +7,7 @@
 package com.lonedev.moviecatalogue.ui.main.details.movie
 
 import android.appwidget.AppWidgetManager
-import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -60,6 +60,14 @@ class MovieDetailActivity : BaseActivity() {
 
     override fun getRootView(): View {
         return findViewById(R.id.coordinator)
+    }
+
+    companion object {
+        fun generateIntent(context: Context?, movie: MovieResult?): Intent {
+            return Intent(context, MovieDetailActivity::class.java).apply {
+                putExtra("movie", movie)
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

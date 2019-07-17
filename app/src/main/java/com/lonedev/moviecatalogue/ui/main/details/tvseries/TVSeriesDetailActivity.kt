@@ -6,6 +6,7 @@
 
 package com.lonedev.moviecatalogue.ui.main.details.tvseries
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -22,10 +23,12 @@ import butterknife.BindView
 import com.bumptech.glide.RequestManager
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseActivity
+import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult
 import com.lonedev.moviecatalogue.ui.adapter.VideoAdapter
+import com.lonedev.moviecatalogue.ui.main.details.movie.MovieDetailActivity
 import com.lonedev.moviecatalogue.ui.widget.TheTVWidget
 import com.lonedev.moviecatalogue.utils.Constant
 import com.lonedev.moviecatalogue.utils.OnItemClickListener
@@ -54,6 +57,14 @@ class TVSeriesDetailActivity : BaseActivity() {
 
     override fun getRootView(): View {
         return findViewById(R.id.coordinator)
+    }
+
+    companion object {
+        fun generateIntent(context: Context?, tvSeriesResult: TVSeriesResult?): Intent {
+            return Intent(context, MovieDetailActivity::class.java).apply {
+                putExtra("tv", tvSeriesResult)
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

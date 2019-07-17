@@ -9,11 +9,19 @@ package com.lonedev.moviecatalogue.ui.main.settings
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.ViewModelProviders
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseActivity
+import com.lonedev.moviecatalogue.utils.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_settings.*
+import javax.inject.Inject
 
 class SettingsActivity : BaseActivity() {
+
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    lateinit var settingsViewModel: SettingsViewModel
 
     override fun layoutResource(): Int {
         return R.layout.activity_settings
@@ -28,6 +36,9 @@ class SettingsActivity : BaseActivity() {
 
         setSupportActionBar(toolbar)
 
+        settingsViewModel = ViewModelProviders.of(this, factory).get(SettingsViewModel::class.java)
+
+
         supportActionBar?.title = "Settings"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -37,7 +48,7 @@ class SettingsActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             android.R.id.home -> {
                 finish()
             }
@@ -45,4 +56,8 @@ class SettingsActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        settingsViewModel.onDestroy()
+    }
 }

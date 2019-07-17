@@ -9,6 +9,7 @@ package com.lonedev.moviecatalogue.ui.main.settings
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import android.widget.Toast
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -19,11 +20,21 @@ import com.lonedev.moviecatalogue.utils.Preferences
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
     Preference.OnPreferenceClickListener {
 
+    private lateinit var settingsViewModel: SettingsViewModel
 
-    companion object{
+    companion object {
         internal const val DAILY_REMINDER_KEY = "daily_reminder"
-        internal const val RELEASE_REMINDER_KEY = "release_reminder"
+        internal const val MOVIE_RELEASE_REMINDER_KEY = "movie_release_reminder"
+        internal const val TV_RELEASE_REMINDER_KEY = "tv_release_reminder"
         internal const val LANGUAGE_KEY = "language"
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val activity = activity as SettingsActivity
+        settingsViewModel = activity.settingsViewModel
+
     }
 
     override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
@@ -38,13 +49,21 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 Preferences.disableDailyReminder(activity)
                 Toast.makeText(context, "Daily Reminder Off", Toast.LENGTH_SHORT).show()
             }
-        } else if(preferenceKey.equals(RELEASE_REMINDER_KEY)){
+        } else if (preferenceKey.equals(MOVIE_RELEASE_REMINDER_KEY)) {
             if (isPreferenceOn) {
-                Preferences.setupDailyReminder(activity)
-                Toast.makeText(context, "Release Reminder On", Toast.LENGTH_SHORT).show()
+                settingsViewModel.setupMovieReleaseReminder(activity)
+                Toast.makeText(context, "Movie Release Reminder On", Toast.LENGTH_SHORT).show()
             } else {
-                Preferences.disableDailyReminder(activity)
-                Toast.makeText(context, "Release Reminder Off", Toast.LENGTH_SHORT).show()
+                Preferences.disableMovieReleaseReminder(activity)
+                Toast.makeText(context, "Movie Release Reminder Off", Toast.LENGTH_SHORT).show()
+            }
+        } else if (preferenceKey.equals(TV_RELEASE_REMINDER_KEY)) {
+            if (isPreferenceOn) {
+                settingsViewModel.setupTVReleaseReminder(activity)
+                Toast.makeText(context, "TV Release Reminder On", Toast.LENGTH_SHORT).show()
+            } else {
+                Preferences.disableTVSeriesReleaseReminder(activity)
+                Toast.makeText(context, "TV Release Reminder Off", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -68,8 +87,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         val dailyReminder = findPreference<SwitchPreference>(DAILY_REMINDER_KEY)
         dailyReminder?.onPreferenceChangeListener = this
 
-        val releaseReminder = findPreference<SwitchPreference>(RELEASE_REMINDER_KEY)
-        releaseReminder?.onPreferenceClickListener = this
+        val movieReleaseReminder = findPreference<SwitchPreference>(MOVIE_RELEASE_REMINDER_KEY)
+        movieReleaseReminder?.onPreferenceChangeListener = this
+
+        val tvReleaseReminder = findPreference<SwitchPreference>(TV_RELEASE_REMINDER_KEY)
+        tvReleaseReminder?.onPreferenceChangeListener = this
 
         val languageSettings = findPreference<Preference>(LANGUAGE_KEY)
         languageSettings?.onPreferenceClickListener = this

@@ -1,10 +1,10 @@
 /*
- * Created by Bagus Yogatama on 7/14/19 12:58 PM
+ * Created by Bagus Yogatama on 7/15/19 11:06 PM
  * Copyright (c) 2019 . All rights reserved.
- * Last modified 7/14/19 12:58 PM
+ * Last modified 7/15/19 11:06 PM
  */
 
-package com.lonedev.moviecatalogue.service
+package com.lonedev.moviecatalogue.base
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -17,34 +17,30 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.lonedev.moviecatalogue.R
-import com.lonedev.moviecatalogue.ui.main.favorite.fragment.FavoriteActivity
 
-class DailyReminder : BroadcastReceiver() {
+abstract class BaseBroadcastReceiver : BroadcastReceiver() {
 
-    companion object{
-        const val NOTIFICATION_ID: Int = 101
-        const val NOTIFICATION_CHANNEL_ID: String = "100"
-    }
+    private lateinit var nextIntent : Intent
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        val appName = context?.resources?.getString(R.string.app_name)
-        val message = context?.resources?.getString(R.string.comeback_again)
-        displayDailyReminder(context, appName, message, NOTIFICATION_ID)
+        nextIntent = notificationIntent(context, intent)
     }
 
-    private fun displayDailyReminder(context: Context?, title: String?, message: String?, notificationId: Int) {
+    fun displayReminder(
+        context: Context?, title: String?, message: String?,
+        notificationId: Int, notificationChannelId: String, notificationChannelName: String
+    ) {
         val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val favouriteActivity = Intent(context, FavoriteActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             context,
             notificationId,
-            favouriteActivity,
+            nextIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val notificationBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
+        val notificationBuilder = NotificationCompat.Builder(context, notificationChannelId)
             .setSmallIcon(R.drawable.ic_local_movies_white_24dp)
             .setContentTitle(title)
             .setContentText(message)
@@ -57,8 +53,8 @@ class DailyReminder : BroadcastReceiver() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannelImportance = NotificationManager.IMPORTANCE_HIGH
             val notificationChannel = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID,
-                "DAILY_REMINDER", notificationChannelImportance
+                notificationChannelId,
+                notificationChannelName, notificationChannelImportance
             ).apply {
                 enableLights(true)
                 enableVibration(true)
@@ -74,4 +70,5 @@ class DailyReminder : BroadcastReceiver() {
 
     }
 
+    abstract fun notificationIntent(context: Context?, intent: Intent?): Intent
 }
