@@ -47,6 +47,8 @@ dependencies {
     implementation rootProject.coreKTX
     implementation rootProject.fragmentKTX
 
+    implementation "androidx.preference:preference-ktx:1.1.0-rc01"
+
     implementation rootProject.ext.constraintLayout
 
     implementation rootProject.ext.lifecycleExtension

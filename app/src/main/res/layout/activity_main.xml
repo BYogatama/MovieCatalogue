@@ -6,10 +6,10 @@
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/parent_layout"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/parent_layout"
         android:layout_width="match_parent" android:layout_height="match_parent"
         tools:context=".ui.main.main.MainActivity">
 
@@ -38,5 +38,9 @@
             app:menu="@menu/menu_bottom_nav"
             android:background="#ffffff"
             app:elevation="1dp"/>
+
+    <FrameLayout android:id="@+id/settings_container"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

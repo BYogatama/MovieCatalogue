@@ -8,19 +8,20 @@ package com.lonedev.moviecatalogue.ui.main.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.preference.PreferenceManager
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.firebase.jobdispatcher.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseActivity
 import com.lonedev.moviecatalogue.ui.main.favorite.fragment.FavoriteActivity
 import com.lonedev.moviecatalogue.ui.main.main.fragment.movie.MovieFragment
 import com.lonedev.moviecatalogue.ui.main.main.fragment.tv.TVSeriesFragment
+import com.lonedev.moviecatalogue.ui.main.settings.SettingsActivity
+import com.lonedev.moviecatalogue.utils.Preferences
 import kotlinx.android.synthetic.main.activity_detail_movies.*
 
 
@@ -28,8 +29,6 @@ class MainActivity : BaseActivity() {
 
     @BindView(R.id.bottom_navigation)
     lateinit var bottomNavigation: BottomNavigationView
-
-    lateinit var jobDispatcher: FirebaseJobDispatcher
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -66,9 +65,24 @@ class MainActivity : BaseActivity() {
 
         setSupportActionBar(toolbar)
 
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
+
         bottomNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         bottomNavigation.selectedItemId = R.id.navigation_movies
 
+        getDefaultSettings()
+
+    }
+
+    private fun getDefaultSettings() {
+        val sharedPreference = PreferenceManager.getDefaultSharedPreferences(this)
+        val isDailyReminderOn = sharedPreference.getBoolean("daily_reminder", false)
+
+        if (isDailyReminderOn) {
+            Preferences.setupDailyReminder(this)
+        } else {
+            Preferences.disableDailyReminder(this)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -78,8 +92,7 @@ class MainActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.menu_setting) {
-            val langSetting = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(langSetting)
+            startActivity(Intent(this, SettingsActivity::class.java))
         } else if (item?.itemId == R.id.action_favorite) {
             val favorite = Intent(this, FavoriteActivity::class.java)
             startActivity(favorite)

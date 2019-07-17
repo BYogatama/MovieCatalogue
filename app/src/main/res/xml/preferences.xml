@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Bagus Yogatama on 7/14/19 2:56 PM
+  ~ Copyright (c) 2019 . All rights reserved.
+  ~ Last modified 7/14/19 2:56 PM
+  -->
+
+<PreferenceScreen
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            app:key="notification_category"
+            app:title="@string/notifications"
+            android:icon="@drawable/ic_notifications_24dp">
+
+        <SwitchPreference
+                app:key="daily_reminder"
+                app:title="@string/daily_reminder"
+                android:icon="@drawable/ic_clock_24dp"
+                android:defaultValue="true"/>
+
+        <SwitchPreference
+                app:key="movie_release_reminder"
+                app:title="@string/movie_release_reminder"
+                android:icon="@drawable/ic_clock_24dp"
+                android:defaultValue="true"/>
+
+        <SwitchPreference
+                app:key="tv_release_reminder"
+                app:title="@string/tv_release_reminder"
+                android:icon="@drawable/ic_clock_24dp"
+                android:defaultValue="true"/>
+
+    </PreferenceCategory>
+
+    <Preference
+            app:key="language"
+            app:title="@string/language"
+            android:icon="@drawable/ic_language_24dp"/>
+
+
+</PreferenceScreen>

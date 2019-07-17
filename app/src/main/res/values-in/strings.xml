@@ -20,4 +20,12 @@
     <string name="favourites_movie">Film Favorit</string>
     <string name="favourites_tv">TV Favorit</string>
     <string name="no_favourites_tvs">Tidak Ada TV Favorit</string>
+    <string name="comeback_again">Selamat Pagi, apakah kamu sudah menonton film atau tv favorit kamu?</string>
+    <string name="language">Bahasa</string>
+    <string name="daily_reminder">Pengingat Harian</string>
+    <string name="release_reminder">Pengigat Rilis</string>
+    <string name="notifications">Notifikasi</string>
+    <string name="release_reminder_message">Hi, hari ini %s telah di rilis</string>
+    <string name="tv_release_reminder">TV Release Reminder</string>
+    <string name="movie_release_reminder">Movie Release Reminder</string>
 </resources>
