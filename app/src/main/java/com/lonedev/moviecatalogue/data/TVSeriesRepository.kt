@@ -6,12 +6,12 @@
 
 package com.lonedev.moviecatalogue.data
 
+import com.lonedev.moviecatalogue.BuildConfig
 import com.lonedev.moviecatalogue.data.local.dao.TVSeriesDao
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult
 import com.lonedev.moviecatalogue.data.remote.MovieApi
-import com.lonedev.moviecatalogue.utils.Constant
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -37,7 +37,7 @@ class TVSeriesRepository @Inject constructor(
      *     for usage in TVSeriesViewModel. MemberApi is Injected using DI in this class
      *     so it can be use directly in this class
      */
-    fun getTVSeriesFromNetwork(): Observable<List<TVSeriesResult>> {
+    private fun getTVSeriesFromNetwork(): Observable<List<TVSeriesResult>> {
 
         var language = Locale.getDefault().toString()
         language = language.replace("_", "-")
@@ -46,7 +46,7 @@ class TVSeriesRepository @Inject constructor(
             language = "id-ID"
         }
 
-        return movieApi.getTvSeries(Constant.API_KEY, language)
+        return movieApi.getTvSeries(BuildConfig.API_KEY, language)
             .map {
                 return@map it.results
             }
@@ -62,7 +62,7 @@ class TVSeriesRepository @Inject constructor(
      *     for usage in MovieViewModel. MovieDao is Injected using DI in this class
      *     so it can be use directly in this class
      */
-    fun getTVSeriesFromLocal(): Observable<List<TVSeriesResult>> {
+    private fun getTVSeriesFromLocal(): Observable<List<TVSeriesResult>> {
         return tvSeriesDao.getTVSeries().toObservable()
     }
 
@@ -76,7 +76,7 @@ class TVSeriesRepository @Inject constructor(
             language = "en-US"
         }
 
-        return movieApi.getTvVideos(movieId, Constant.API_KEY, language)
+        return movieApi.getTvVideos(movieId, BuildConfig.API_KEY, language)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

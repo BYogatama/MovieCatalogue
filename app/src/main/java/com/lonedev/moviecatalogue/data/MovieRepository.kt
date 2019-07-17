@@ -6,12 +6,12 @@
 
 package com.lonedev.moviecatalogue.data
 
+import com.lonedev.moviecatalogue.BuildConfig
 import com.lonedev.moviecatalogue.data.local.dao.MoviesDao
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult
 import com.lonedev.moviecatalogue.data.remote.MovieApi
-import com.lonedev.moviecatalogue.utils.Constant
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -45,7 +45,7 @@ class MovieRepository @Inject constructor(
             language = "id-ID"
         }
 
-        return movieApi.getMovies(Constant.API_KEY, language)
+        return movieApi.getMovies(BuildConfig.API_KEY, language)
             .map {
                 return@map it.results
             }
@@ -74,7 +74,7 @@ class MovieRepository @Inject constructor(
             language = "en-US"
         }
 
-        return movieApi.getMovieVideos(movieId, Constant.API_KEY, language)
+        return movieApi.getMovieVideos(movieId, BuildConfig.API_KEY, language)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

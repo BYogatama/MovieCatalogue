@@ -10,4 +10,8 @@
     <string name="success_remove_favourites">Success Removing Favourites</string>
     <string name="failed_remove_favourites">Failed Removing Favourites</string>
     <string name="favorite">Favorite</string>
+    <string name="no_favourites_movies">No Favourites Movie</string>
+    <string name="favourites_movie">Favourites Movies</string>
+    <string name="favourites_tv">Favourites TV</string>
+    <string name="no_favourites_tvs">No Favourite TV</string>
 </resources>

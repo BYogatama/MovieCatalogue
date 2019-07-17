@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Bagus Yogatama on 7/7/19 5:00 PM
+  ~ Copyright (c) 2019 . All rights reserved.
+  ~ Last modified 7/7/19 5:00 PM
+  -->
+
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:minWidth="180dp"
+                    android:minHeight="180dp"
+                    android:updatePeriodMillis="0"
+                    android:previewImage="@drawable/the_movie_widget_preview"
+                    android:initialLayout="@layout/the_movie_widget"
+                    android:resizeMode="horizontal|vertical"
+                    android:widgetCategory="home_screen"
+                    android:initialKeyguardLayout="@layout/the_movie_widget"/>

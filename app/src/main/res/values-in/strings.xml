@@ -16,4 +16,8 @@
     <string name="success_remove_favourites">Berhasil Menghapus Favorit</string>
     <string name="failed_remove_favourites">Gagal Menghapus Favorit</string>
     <string name="favorite">Favorit</string>
+    <string name="no_favourites_movies">Tidak Ada Film Favorit</string>
+    <string name="favourites_movie">Film Favorit</string>
+    <string name="favourites_tv">TV Favorit</string>
+    <string name="no_favourites_tvs">Tidak Ada TV Favorit</string>
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Bagus Yogatama on 7/12/19 9:24 PM
+  ~ Copyright (c) 2019 . All rights reserved.
+  ~ Last modified 7/12/19 9:24 PM
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/colorPrimary"/>
+    <corners android:radius="16dp"/>
+</shape>

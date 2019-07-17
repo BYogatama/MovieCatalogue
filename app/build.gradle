@@ -15,6 +15,18 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        File extrasFiles = new File("extra.properties")
+        if(extrasFiles.exists()){
+            def extrasFile = rootProject.file('extra.properties')
+            def extras = new Properties()
+            extras.load(new FileInputStream(extrasFile))
+            buildConfigField "String", "API_KEY", extras.getProperty('API_KEY')
+            buildConfigField "String", "BASE_URL", extras.getProperty('BASE_URL')
+            buildConfigField "String", "DB_NAME", extras.getProperty('DB_NAME')
+
+        }
+
     }
     buildTypes {
         release {
@@ -68,6 +80,8 @@ dependencies {
     implementation rootProject.ext.retrofit
     implementation rootProject.ext.gsonConverter
     implementation rootProject.ext.retrofitRxJava2
+
+    implementation rootProject.ext.firebaseDispatcher
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
