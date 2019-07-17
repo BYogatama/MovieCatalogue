@@ -62,7 +62,7 @@ class TVSeriesDetailActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this, factory).get(TVSeriesDetailViewModel::class.java)
         videoAdapter = VideoAdapter(this)
 
-        tvSeries = intent.getParcelableExtra<TVSeriesResult>("tv")
+        tvSeries = intent.getParcelableExtra("tv")
 
         getFavoritedTVSeries(tvSeries.id)
 
