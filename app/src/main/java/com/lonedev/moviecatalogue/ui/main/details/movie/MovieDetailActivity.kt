@@ -79,7 +79,12 @@ class MovieDetailActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this, factory).get(MovieDetailViewModel::class.java)
         videoAdapter = VideoAdapter(this)
 
-        movie = intent.getParcelableExtra("movie")
+        movie = if (intent.getParcelableExtra<MovieResult>("movie") != null) {
+            intent.getParcelableExtra("movie")
+        } else {
+            val bundle = intent.getBundleExtra("bundle")
+            bundle.getParcelable("movie")
+        }
 
         getFavoritedMovies(movie.id)
 
