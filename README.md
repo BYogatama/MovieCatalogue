@@ -1,16 +1,20 @@
 # Movie Catalogue
-
-This app is displaying list of Movies and TV Series from The Movie DB
 -----------------------------------------------------------
 ## Building
-Just run in Android Studio
+Just run in Android Studio or download Release version in Release.
 
 ## Features
-- List Of Movies & TV Series
-- Favorite Movies
+- List Of Movies & TV Series.
+- Search Movie & TV Series.
+- Favorite Movies.
 
 ## Library
 - Android Architecture Component
+- Kotlin
 - RxJava2
 - Retrofit2
 - Dagger2
+- etc.
+
+## Next Implementation
+Still thinking & researching.
