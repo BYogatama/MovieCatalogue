@@ -16,7 +16,7 @@ import com.lonedev.moviecatalogue.ui.main.main.fragment.movie.MovieViewModel
 import com.lonedev.moviecatalogue.ui.main.main.fragment.search.SearchViewModel
 import com.lonedev.moviecatalogue.ui.main.main.fragment.tv.TVSeriesViewModel
 import com.lonedev.moviecatalogue.ui.main.settings.SettingsViewModel
-import com.schoters.androidapp.di.util.ViewModelKey
+import com.lonedev.moviecatalogue.di.util.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

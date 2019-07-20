@@ -56,7 +56,7 @@ constructor(private val context: Context, private val requestManager: RequestMan
 
         fun bind(searchResult: SearchResult, requestManager: RequestManager) {
 
-            if (searchResult.title!!.isEmpty()) {
+            if (searchResult.title.isEmpty()) {
                 movieTitle.text = searchResult.name
             } else {
                 movieTitle.text = searchResult.title

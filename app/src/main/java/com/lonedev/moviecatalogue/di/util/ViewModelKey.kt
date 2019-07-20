@@ -1,4 +1,4 @@
-package com.schoters.androidapp.di.util
+package com.lonedev.moviecatalogue.di.util
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey
