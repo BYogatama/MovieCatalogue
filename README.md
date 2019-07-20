@@ -1,6 +1,5 @@
 # Movie Catalogue
------------------------------------------------------------
-## Building
+## Running
 Just run in Android Studio or download Release version in Release.
 
 ## Features
