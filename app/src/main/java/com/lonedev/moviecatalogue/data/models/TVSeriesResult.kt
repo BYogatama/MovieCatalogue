@@ -29,7 +29,7 @@ class TVSeriesResult(
     @SerializedName("first_air_date")
     val firstAirDate: String? = null,
     @SerializedName("backdrop_path")
-    val backdropPath: String = "",
+    val backdropPath: String? = "",
     @SerializedName("vote_average")
     val voteAverage: Double? = null,
     @SerializedName("overview")

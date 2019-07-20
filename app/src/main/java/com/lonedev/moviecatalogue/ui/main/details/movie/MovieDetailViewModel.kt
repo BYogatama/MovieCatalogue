@@ -11,8 +11,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lonedev.moviecatalogue.R
-import com.lonedev.moviecatalogue.data.FavoriteRepository
-import com.lonedev.moviecatalogue.data.MovieRepository
+import com.lonedev.moviecatalogue.data.repositories.FavoriteRepository
+import com.lonedev.moviecatalogue.data.repositories.MovieRepository
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult

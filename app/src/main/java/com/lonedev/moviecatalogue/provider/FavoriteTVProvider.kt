@@ -78,7 +78,7 @@ class FavoriteTVProvider : ContentProvider() {
     }
 
     override fun onCreate(): Boolean {
-        appDatabase = Room.databaseBuilder(context, AppDatabase::class.java, BuildConfig.DB_NAME).build()
+        appDatabase = Room.databaseBuilder(context!!, AppDatabase::class.java, BuildConfig.DB_NAME).build()
         favouritesDao = appDatabase.favouritesDao()
         return true
     }

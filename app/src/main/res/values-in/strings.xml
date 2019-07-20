@@ -28,4 +28,6 @@
     <string name="release_reminder_message">Hi, hari ini %s telah di rilis</string>
     <string name="tv_release_reminder">TV Release Reminder</string>
     <string name="movie_release_reminder">Movie Release Reminder</string>
+    <string name="search">Search</string>
+    <string name="looking_for">Mencari Film atau TV?\nLangsung cari dan submit!</string>
 </resources>

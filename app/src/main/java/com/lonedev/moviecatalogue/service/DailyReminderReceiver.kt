@@ -11,6 +11,7 @@ import android.content.Intent
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseBroadcastReceiver
 import com.lonedev.moviecatalogue.ui.main.favorite.fragment.FavoriteActivity
+import java.util.*
 
 class DailyReminderReceiver : BaseBroadcastReceiver() {
 
@@ -24,12 +25,22 @@ class DailyReminderReceiver : BaseBroadcastReceiver() {
         val appName = context?.resources?.getString(R.string.app_name)
         val message = context?.resources?.getString(R.string.comeback_again)
 
-        displayReminder(
-            context, appName, message,
-            NOTIFICATION_ID,
-            NOTIFICATION_CHANNEL_ID,
-            "DISPLAY_REMINDER"
-        )
+        val scheduledTime = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 7)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }.timeInMillis
+
+        val currentTime = System.currentTimeMillis()
+
+        if (currentTime <= scheduledTime) {
+            displayReminder(
+                context, appName, message,
+                NOTIFICATION_ID,
+                NOTIFICATION_CHANNEL_ID,
+                "DISPLAY_REMINDER"
+            )
+        }
     }
 
     override fun notificationIntent(context: Context?, intent: Intent?): Intent {

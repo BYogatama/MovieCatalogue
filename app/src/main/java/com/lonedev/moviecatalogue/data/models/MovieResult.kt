@@ -31,7 +31,7 @@ class MovieResult(
     @SerializedName("original_title")
     val originalTitle: String? = null,
     @SerializedName("backdrop_path")
-    val backdropPath: String = "",
+    val backdropPath: String? = "",
     @SerializedName("overview")
     val overview: String? = null,
     @SerializedName("release_date")
