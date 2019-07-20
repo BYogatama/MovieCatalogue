@@ -4,7 +4,7 @@
  * Last modified 7/2/19 2:01 PM
  */
 
-package com.lonedev.moviecatalogue.data
+package com.lonedev.moviecatalogue.data.repositories
 
 import com.lonedev.moviecatalogue.data.local.dao.FavouritesDao
 import com.lonedev.moviecatalogue.data.models.Favourites

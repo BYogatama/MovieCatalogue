@@ -9,7 +9,7 @@ package com.lonedev.moviecatalogue.ui.main.main.fragment.movie
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lonedev.moviecatalogue.data.MovieRepository
+import com.lonedev.moviecatalogue.data.repositories.MovieRepository
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver

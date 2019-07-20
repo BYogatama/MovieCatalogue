@@ -11,7 +11,9 @@ import com.lonedev.moviecatalogue.ui.main.details.movie.MovieDetailViewModel
 import com.lonedev.moviecatalogue.ui.main.details.tvseries.TVSeriesDetailViewModel
 import com.lonedev.moviecatalogue.ui.main.favorite.fragment.movie.FavouritesMoviesViewModel
 import com.lonedev.moviecatalogue.ui.main.favorite.fragment.tv.FavouritesTVViewModel
+import com.lonedev.moviecatalogue.ui.main.main.MainViewModel
 import com.lonedev.moviecatalogue.ui.main.main.fragment.movie.MovieViewModel
+import com.lonedev.moviecatalogue.ui.main.main.fragment.search.SearchViewModel
 import com.lonedev.moviecatalogue.ui.main.main.fragment.tv.TVSeriesViewModel
 import com.lonedev.moviecatalogue.ui.main.settings.SettingsViewModel
 import com.schoters.androidapp.di.util.ViewModelKey
@@ -21,6 +23,11 @@ import dagger.multibindings.IntoMap
 
 @Module
 abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    abstract fun bindMainViewModle(mainViewModel: MainViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(MovieViewModel::class)
@@ -55,4 +62,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SettingsViewModel::class)
     abstract fun bindSettingsViewModel(settingsViewModel: SettingsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
 }

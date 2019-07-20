@@ -12,6 +12,7 @@ import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseBroadcastReceiver
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import com.lonedev.moviecatalogue.ui.main.details.tvseries.TVSeriesDetailActivity
+import java.util.*
 
 class TVSeriesReleaseReminder : BaseBroadcastReceiver() {
 
@@ -27,14 +28,24 @@ class TVSeriesReleaseReminder : BaseBroadcastReceiver() {
         val bundleExtras = intent?.getBundleExtra("tv")
         val tvSeriesResult = bundleExtras?.getParcelable<TVSeriesResult>("tv")
 
-        displayReminder(
-            context,
-            appName,
-            context?.getString(R.string.release_reminder_message)?.let { String.format(it, tvSeriesResult?.name) },
-            NOTIFICATION_ID,
-            NOTIFICATION_CHANNEL_ID,
-            "RELEASE_REMINDER"
-        )
+        val scheduledTime = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 8)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }.timeInMillis
+
+        val currentTime = System.currentTimeMillis()
+
+        if (currentTime <= scheduledTime) {
+            displayReminder(
+                context,
+                appName,
+                context?.getString(R.string.release_reminder_message)?.let { String.format(it, tvSeriesResult?.name) },
+                NOTIFICATION_ID,
+                NOTIFICATION_CHANNEL_ID,
+                "RELEASE_REMINDER"
+            )
+        }
     }
 
     override fun notificationIntent(context: Context?, intent: Intent?): Intent {

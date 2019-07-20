@@ -16,4 +16,9 @@
             android:title="@string/tv_series"
             android:icon="@drawable/ic_live_tv_white_24dp"
             app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/navigation_search"
+          android:title="@string/search"
+          android:icon="@drawable/ic_search"
+          app:showAsAction="ifRoom"/>
 </menu>

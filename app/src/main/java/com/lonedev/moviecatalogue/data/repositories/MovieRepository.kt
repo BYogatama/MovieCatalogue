@@ -1,14 +1,14 @@
 /*
- * Created by Bagus Yogatama on 6/28/19 4:45 PM
+ * Created by Bagus Yogatama on 6/28/19 3:44 PM
  * Copyright (c) 2019 . All rights reserved.
- * Last modified 6/28/19 4:45 PM
+ * Last modified 6/28/19 3:44 PM
  */
 
-package com.lonedev.moviecatalogue.data
+package com.lonedev.moviecatalogue.data.repositories
 
 import com.lonedev.moviecatalogue.BuildConfig
-import com.lonedev.moviecatalogue.data.local.dao.TVSeriesDao
-import com.lonedev.moviecatalogue.data.models.TVSeriesResult
+import com.lonedev.moviecatalogue.data.local.dao.MoviesDao
+import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult
 import com.lonedev.moviecatalogue.data.remote.MovieApi
@@ -20,24 +20,23 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TVSeriesRepository @Inject constructor(
+class MovieRepository @Inject constructor(
     private val movieApi: MovieApi,
-    private val tvSeriesDao: TVSeriesDao
+    private val moviesDao: MoviesDao
 ) {
 
-
-    fun getTvSeries(): Observable<List<TVSeriesResult>> {
-        val observableFromNetwork = getTVSeriesFromNetwork()
-        val observableFromLocal = getTVSeriesFromLocal()
+    fun getMovies(): Observable<List<MovieResult>> {
+        val observableFromNetwork = getMoviesFromNetwork()
+        val observableFromLocal = getMoviesFromLocal()
         return Observable.concatArrayEager(observableFromNetwork, observableFromLocal)
     }
 
     /**
-     * Get TV Series from Network and return it as Observable<Movie<TVSeriesResult>>
-     *     for usage in TVSeriesViewModel. MemberApi is Injected using DI in this class
+     * Get Movies from Network and return it as Observable<List<MovieResult>>
+     *     for usage in MovieViewModel. MovieApi is Injected using DI in this class
      *     so it can be use directly in this class
      */
-    private fun getTVSeriesFromNetwork(): Observable<List<TVSeriesResult>> {
+    private fun getMoviesFromNetwork(): Observable<List<MovieResult>> {
 
         var language = Locale.getDefault().toString()
         language = language.replace("_", "-")
@@ -46,13 +45,13 @@ class TVSeriesRepository @Inject constructor(
             language = "id-ID"
         }
 
-        return movieApi.getTvSeries(BuildConfig.API_KEY, language)
+        return movieApi.getMovies(BuildConfig.API_KEY, language)
             .map {
                 return@map it.results
             }
             .doOnNext {
                 for (item in it) {
-                    tvSeriesDao.saveTVSeries(item)
+                    moviesDao.saveMovie(item)
                 }
             }
     }
@@ -62,23 +61,21 @@ class TVSeriesRepository @Inject constructor(
      *     for usage in MovieViewModel. MovieDao is Injected using DI in this class
      *     so it can be use directly in this class
      */
-    private fun getTVSeriesFromLocal(): Observable<List<TVSeriesResult>> {
-        return tvSeriesDao.getTVSeries().toObservable()
+    private fun getMoviesFromLocal(): Observable<List<MovieResult>> {
+        return moviesDao.getMovies().toObservable()
     }
 
-    fun getTvVideos(movieId: Int): Observable<Video<VideoResult>> {
+    fun getMovieVideos(movieId: Int): Observable<Video<VideoResult>> {
 
         var language = Locale.getDefault().toString()
         language = language.replace("_", "-")
 
-        // No videos using Bahasa Indonesia so default is en-US for Videos
         if (language == "in-ID") {
             language = "en-US"
         }
 
-        return movieApi.getTvVideos(movieId, BuildConfig.API_KEY, language)
+        return movieApi.getMovieVideos(movieId, BuildConfig.API_KEY, language)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
-
 }

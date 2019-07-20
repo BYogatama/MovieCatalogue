@@ -12,6 +12,7 @@ import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseBroadcastReceiver
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.ui.main.details.movie.MovieDetailActivity
+import java.util.*
 
 class MovieReleaseReminderReceiver : BaseBroadcastReceiver() {
 
@@ -28,14 +29,24 @@ class MovieReleaseReminderReceiver : BaseBroadcastReceiver() {
         val bundleExtras = intent?.getBundleExtra("movie")
         val movieResult: MovieResult? = bundleExtras?.getParcelable("movie")
 
-        displayReminder(
-            context,
-            appName,
-            context?.getString(R.string.release_reminder_message)?.let { String.format(it, movieResult?.title) },
-            NOTIFICATION_ID,
-            NOTIFICATION_CHANNEL_ID,
-            "RELEASE_REMINDER"
-        )
+        val scheduledTime = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 8)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }.timeInMillis
+
+        val currentTime = System.currentTimeMillis()
+
+        if (currentTime <= scheduledTime) {
+            displayReminder(
+                context,
+                appName,
+                context?.getString(R.string.release_reminder_message)?.let { String.format(it, movieResult?.title) },
+                NOTIFICATION_ID,
+                NOTIFICATION_CHANNEL_ID,
+                "RELEASE_REMINDER"
+            )
+        }
 
     }
 

@@ -39,4 +39,18 @@ interface MovieApi {
         @Query("api_key") apiKey: String,
         @Query("language") language: String
     ): Observable<Video<VideoResult>>
+
+    @GET("search/movie")
+    fun searchMovies(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+        @Query("query") query: String?
+    ): Observable<Movie<SearchResult>>
+
+    @GET("search/tv")
+    fun searchTV(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+        @Query("query") query: String?
+    ): Observable<Movie<SearchResult>>
 }

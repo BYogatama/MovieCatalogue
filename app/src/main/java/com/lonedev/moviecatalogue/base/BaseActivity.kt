@@ -30,7 +30,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         rootView = getRootView()
     }
 
-    fun generateImageUrl(imagePath: String, imageWidth: String): String {
+    fun generateImageUrl(imagePath: String?, imageWidth: String): String {
         return Constant.IMAGE_URL + imageWidth + imagePath
     }
 

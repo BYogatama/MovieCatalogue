@@ -1,10 +1,10 @@
 /*
- * Created by Bagus Yogatama on 7/15/19 11:56 PM
+ * Created by Bagus Yogatama on 7/20/19 7:25 PM
  * Copyright (c) 2019 . All rights reserved.
- * Last modified 7/15/19 11:56 PM
+ * Last modified 7/20/19 7:25 PM
  */
 
-package com.lonedev.moviecatalogue.ui.main.settings
+package com.lonedev.moviecatalogue.ui.main.main
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class SettingsViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val tvSeriesRepository: TVSeriesRepository,
     private val movieRepository: MovieRepository
 ) : ViewModel() {

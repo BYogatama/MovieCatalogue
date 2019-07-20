@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -19,16 +20,24 @@ import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseActivity
 import com.lonedev.moviecatalogue.ui.main.favorite.fragment.FavoriteActivity
 import com.lonedev.moviecatalogue.ui.main.main.fragment.movie.MovieFragment
+import com.lonedev.moviecatalogue.ui.main.main.fragment.search.SearchFragment
 import com.lonedev.moviecatalogue.ui.main.main.fragment.tv.TVSeriesFragment
 import com.lonedev.moviecatalogue.ui.main.settings.SettingsActivity
 import com.lonedev.moviecatalogue.utils.Preferences
+import com.lonedev.moviecatalogue.utils.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail_movies.*
+import javax.inject.Inject
 
 
 class MainActivity : BaseActivity() {
 
     @BindView(R.id.bottom_navigation)
     lateinit var bottomNavigation: BottomNavigationView
+
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    lateinit var mainViewModel: MainViewModel
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -46,6 +55,13 @@ class MainActivity : BaseActivity() {
                 title = resources.getString(R.string.tv_series)
                 return@OnNavigationItemSelectedListener true
             }
+            R.id.navigation_search -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, SearchFragment(), "search")
+                    .commitNow()
+                title = resources.getString(R.string.search)
+                return@OnNavigationItemSelectedListener true
+            }
         }
         false
     }
@@ -60,6 +76,8 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mainViewModel = ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
 
         ButterKnife.bind(this)
 
@@ -77,11 +95,25 @@ class MainActivity : BaseActivity() {
     private fun getDefaultSettings() {
         val sharedPreference = PreferenceManager.getDefaultSharedPreferences(this)
         val isDailyReminderOn = sharedPreference.getBoolean("daily_reminder", false)
+        val isMovieReleaseReminderOn = sharedPreference.getBoolean("movie_release_reminder", false)
+        val isTVReleaseReminderOn = sharedPreference.getBoolean("tv_release_reminder", false)
 
         if (isDailyReminderOn) {
             Preferences.setupDailyReminder(this)
         } else {
             Preferences.disableDailyReminder(this)
+        }
+
+        if (isMovieReleaseReminderOn) {
+            mainViewModel.setupMovieReleaseReminder(this)
+        } else {
+            Preferences.disableMovieReleaseReminder(this)
+        }
+
+        if (isTVReleaseReminderOn) {
+            mainViewModel.setupTVReleaseReminder(this)
+        } else {
+            Preferences.disableTVSeriesReleaseReminder(this)
         }
     }
 

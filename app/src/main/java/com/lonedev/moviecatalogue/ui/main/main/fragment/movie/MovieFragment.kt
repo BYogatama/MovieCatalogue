@@ -53,7 +53,7 @@ class MovieFragment : BaseFragment() {
         getMovies()
     }
 
-    private fun setupRecyclerView(gridCount : Int) {
+    private fun setupRecyclerView(gridCount: Int) {
         listAdapter.requestManager = requestManager
 
         listAdapter.onItemClickListener = object : OnItemClickListener {
@@ -97,7 +97,7 @@ class MovieFragment : BaseFragment() {
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupRecyclerView(3)
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             setupRecyclerView(2)
         }
     }
