@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Bagus Yogatama on 6/24/19 1:11 PM
+  ~ Copyright (c) 2019 . All rights reserved.
+  ~ Last modified 6/24/19 1:11 PM
+  -->
+
+<resources>
+    <string name="release">Rilis</string>
+    <string name="movies">Film</string>
+    <string name="overview">Ikhtisar</string>
+    <string name="tv_series">Serial TV</string>
+    <string name="success_favourties">Berhasil Menyimpan ke Favorit</string>
+    <string name="failed_favourties">Gagal Menyimpan ke Favorit</string>
+    <string name="success_remove_favourites">Berhasil Menghapus Favorit</string>
+    <string name="failed_remove_favourites">Gagal Menghapus Favorit</string>
+    <string name="favorite">Favorit</string>
+</resources>

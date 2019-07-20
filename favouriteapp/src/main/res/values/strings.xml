@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name" translatable="false">Favourite App</string>
+    <string name="release">Release</string>
+    <string name="movies">Movies</string>
+    <string name="overview">Overview</string>
+    <string name="tv_series">TV Series</string>
+    <string name="success_favourties">Success Saving to Favourites</string>
+    <string name="failed_favourties">Failed Saving to Favourites</string>
+    <string name="success_remove_favourites">Success Removing Favourites</string>
+    <string name="failed_remove_favourites">Failed Removing Favourites</string>
+    <string name="favorite">Favorite</string>
+</resources>

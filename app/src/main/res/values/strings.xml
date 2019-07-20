@@ -17,7 +17,6 @@
     <string name="comeback_again">Good Morning, have you watch your favourites movie or tv?</string>
     <string name="language">Language</string>
     <string name="daily_reminder">Daily Reminder</string>
-    <string name="release_reminder">Release Reminder</string>
     <string name="notifications">Notifications</string>
     <string name="release_reminder_message">Hi, today %s is released</string>
     <string name="tv_release_reminder">TV Release Reminder</string>

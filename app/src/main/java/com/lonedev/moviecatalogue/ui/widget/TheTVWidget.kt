@@ -92,7 +92,7 @@ class TheTVWidget : AppWidgetProvider() {
         }
 
         fun refreshWidget(context: Context) {
-            val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
             intent.component = ComponentName(context, TheTVWidget::class.java)
             context.sendBroadcast(intent)
         }

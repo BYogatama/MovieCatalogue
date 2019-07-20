@@ -1,0 +1,100 @@
+/*
+ * Created by Bagus Yogatama on 7/20/19 7:37 PM
+ * Copyright (c) 2019 . All rights reserved.
+ * Last modified 7/20/19 7:37 PM
+ */
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        applicationId "com.lonedev.favouriteapp"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        File extrasFiles = new File("extra.properties")
+        if(extrasFiles.exists()){
+            def extrasFile = rootProject.file('extra.properties')
+            def extras = new Properties()
+            extras.load(new FileInputStream(extrasFile))
+            buildConfigField "String", "API_KEY", extras.getProperty('API_KEY')
+            buildConfigField "String", "BASE_URL", extras.getProperty('BASE_URL')
+            buildConfigField "String", "DB_NAME", extras.getProperty('DB_NAME')
+
+        }
+
+        compileOptions {
+            sourceCompatibility = '1.8'
+            targetCompatibility = '1.8'
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation rootProject.ext.appCompat
+    implementation rootProject.coreKTX
+    implementation rootProject.fragmentKTX
+
+    implementation "androidx.preference:preference-ktx:1.1.0-rc01"
+
+    implementation rootProject.ext.constraintLayout
+
+    implementation rootProject.ext.lifecycleExtension
+    implementation rootProject.ext.lifecycleViewModel
+    implementation rootProject.ext.lifecycleReactiveStreams
+    implementation rootProject.ext.lifecycleJavaCommon
+
+    implementation rootProject.ext.roomRuntime
+    implementation rootProject.ext.roomKTX
+    implementation rootProject.ext.roomRxJava2
+    kapt rootProject.ext.roomCompiler
+    testImplementation rootProject.ext.roomTesting
+
+    implementation rootProject.ext.materialDesign
+
+    implementation rootProject.ext.dagger
+    implementation rootProject.ext.daggerAndroid
+    implementation rootProject.ext.daggerAndroidSupport
+    kapt rootProject.ext.daggerCompiler
+    kapt rootProject.ext.daggerAndroidProcessor
+
+    implementation rootProject.ext.butterKnife
+    kapt rootProject.ext.butterKnifeCompiler
+
+    implementation rootProject.ext.glide
+    kapt rootProject.ext.glideCompiler
+
+    implementation rootProject.ext.rxJava2
+    implementation rootProject.ext.rxAndroid
+
+    implementation rootProject.ext.retrofit
+    implementation rootProject.ext.gsonConverter
+    implementation rootProject.ext.retrofitRxJava2
+
+    implementation rootProject.ext.firebaseDispatcher
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
