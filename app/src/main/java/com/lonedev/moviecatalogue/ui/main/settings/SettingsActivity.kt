@@ -18,11 +18,6 @@ import javax.inject.Inject
 
 class SettingsActivity : BaseActivity() {
 
-    @Inject
-    lateinit var factory: ViewModelFactory
-
-    lateinit var settingsViewModel: SettingsViewModel
-
     override fun layoutResource(): Int {
         return R.layout.activity_settings
     }
@@ -35,8 +30,6 @@ class SettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setSupportActionBar(toolbar)
-
-        settingsViewModel = ViewModelProviders.of(this, factory).get(SettingsViewModel::class.java)
 
 
         supportActionBar?.title = "Settings"
@@ -58,6 +51,5 @@ class SettingsActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        settingsViewModel.onDestroy()
     }
 }

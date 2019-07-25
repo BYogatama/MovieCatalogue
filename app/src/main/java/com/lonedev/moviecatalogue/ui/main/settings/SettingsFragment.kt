@@ -20,21 +20,11 @@ import com.lonedev.moviecatalogue.utils.Preferences
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
     Preference.OnPreferenceClickListener {
 
-    private lateinit var settingsViewModel: SettingsViewModel
-
     companion object {
         internal const val DAILY_REMINDER_KEY = "daily_reminder"
         internal const val MOVIE_RELEASE_REMINDER_KEY = "movie_release_reminder"
         internal const val TV_RELEASE_REMINDER_KEY = "tv_release_reminder"
         internal const val LANGUAGE_KEY = "language"
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val activity = activity as SettingsActivity
-        settingsViewModel = activity.settingsViewModel
-
     }
 
     override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
@@ -51,7 +41,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             }
         } else if (preferenceKey.equals(MOVIE_RELEASE_REMINDER_KEY)) {
             if (isPreferenceOn) {
-                settingsViewModel.setupMovieReleaseReminder(activity)
+                Preferences.setupMovieReleaseReminder(activity)
                 Toast.makeText(context, "Movie Release Reminder On", Toast.LENGTH_SHORT).show()
             } else {
                 Preferences.disableMovieReleaseReminder(activity)
@@ -59,7 +49,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             }
         } else if (preferenceKey.equals(TV_RELEASE_REMINDER_KEY)) {
             if (isPreferenceOn) {
-                settingsViewModel.setupTVReleaseReminder(activity)
+                Preferences.setupTVSeriesReleaseReminder(activity)
                 Toast.makeText(context, "TV Release Reminder On", Toast.LENGTH_SHORT).show()
             } else {
                 Preferences.disableTVSeriesReleaseReminder(activity)

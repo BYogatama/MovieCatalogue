@@ -27,7 +27,7 @@ class MovieResult(
     @SerializedName("popularity")
     val popularity: Double? = null,
     @SerializedName("poster_path")
-    val posterPath: String = "",
+    val posterPath: String? = "",
     @SerializedName("original_title")
     val originalTitle: String? = null,
     @SerializedName("backdrop_path")

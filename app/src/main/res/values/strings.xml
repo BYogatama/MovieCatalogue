@@ -23,4 +23,6 @@
     <string name="movie_release_reminder">Movie Release Reminder</string>
     <string name="search">Search</string>
     <string name="looking_for">Looking for Movies or TVs?\nJust search it and submit!</string>
+    <string name="no_tv_released">No TV Series Released Today</string>
+    <string name="no_movie_released">No Movies Released Today</string>
 </resources>

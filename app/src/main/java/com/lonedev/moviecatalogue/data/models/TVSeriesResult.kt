@@ -35,7 +35,7 @@ class TVSeriesResult(
     @SerializedName("overview")
     val overview: String? = null,
     @SerializedName("poster_path")
-    val posterPath: String = ""
+    val posterPath: String? = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readInt(),

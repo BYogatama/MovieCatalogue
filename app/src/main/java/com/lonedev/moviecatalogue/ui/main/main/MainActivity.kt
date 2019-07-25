@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -36,8 +35,6 @@ class MainActivity : BaseActivity() {
 
     @Inject
     lateinit var factory: ViewModelFactory
-
-    lateinit var mainViewModel: MainViewModel
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -77,8 +74,6 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainViewModel = ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
-
         ButterKnife.bind(this)
 
         setSupportActionBar(toolbar)
@@ -105,13 +100,13 @@ class MainActivity : BaseActivity() {
         }
 
         if (isMovieReleaseReminderOn) {
-            mainViewModel.setupMovieReleaseReminder(this)
+            Preferences.setupMovieReleaseReminder(this)
         } else {
             Preferences.disableMovieReleaseReminder(this)
         }
 
         if (isTVReleaseReminderOn) {
-            mainViewModel.setupTVReleaseReminder(this)
+            Preferences.setupTVSeriesReleaseReminder(this)
         } else {
             Preferences.disableTVSeriesReleaseReminder(this)
         }

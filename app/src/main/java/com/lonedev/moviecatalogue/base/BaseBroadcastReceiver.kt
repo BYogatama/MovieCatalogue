@@ -15,10 +15,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
+import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import com.lonedev.moviecatalogue.R
 
-abstract class BaseBroadcastReceiver : BroadcastReceiver() {
+abstract class BaseBroadcastReceiver<T> : BroadcastReceiver() {
 
     private lateinit var nextIntent : Intent
 
@@ -28,9 +29,11 @@ abstract class BaseBroadcastReceiver : BroadcastReceiver() {
 
     fun displayReminder(
         context: Context?, title: String?, message: String?,
-        notificationId: Int, notificationChannelId: String, notificationChannelName: String
+        result : T?, notificationId: Int, notificationChannelId: String, notificationChannelName: String
     ) {
         val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        nextIntent.putExtra("bundle", addExtraToIntent(result))
 
         val pendingIntent = PendingIntent.getActivity(
             context,
@@ -71,4 +74,6 @@ abstract class BaseBroadcastReceiver : BroadcastReceiver() {
     }
 
     abstract fun notificationIntent(context: Context?, intent: Intent?): Intent
+
+    abstract fun addExtraToIntent(result: T?) : Bundle
 }
