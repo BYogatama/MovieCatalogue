@@ -1,25 +1,5 @@
-# Movie Catalogue
-## Running
-Just run in Android Studio or download Release version in Release.
+MIT License
 
-## Features
-- List Of Movies & TV Series.
-- Search Movie & TV Series.
-- Favorite Movies.
-
-## Library
-- Android Architecture Component
-- Kotlin
-- RxJava2
-- Retrofit2
-- Dagger2
-- etc.
-
-## Next Implementation
-Still thinking & researching.
-
-## MIT License
-```
 Copyright (c) 2019 BYogatama
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -39,4 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-```
