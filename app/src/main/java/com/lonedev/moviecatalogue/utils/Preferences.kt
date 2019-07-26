@@ -73,8 +73,8 @@ object Preferences {
 
     fun disableMovieReleaseReminder(context: Context?) {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.cancel(
-            getPendingIntent(
+        cancelAlarm(
+            alarmManager, getPendingIntent(
                 context,
                 MovieReleaseReminderReceiver.NOTIFICATION_ID,
                 MovieReleaseReminderReceiver::class.java
@@ -84,8 +84,8 @@ object Preferences {
 
     fun disableTVSeriesReleaseReminder(context: Context?) {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.cancel(
-            getPendingIntent(
+        cancelAlarm(
+            alarmManager, getPendingIntent(
                 context,
                 TVSeriesReleaseReminder.NOTIFICATION_ID,
                 TVSeriesReleaseReminder::class.java
@@ -95,8 +95,8 @@ object Preferences {
 
     fun disableDailyReminder(context: Context?) {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.cancel(
-            getPendingIntent(
+        cancelAlarm(
+            alarmManager, getPendingIntent(
                 context,
                 DailyReminderReceiver.NOTIFICATION_ID,
                 DailyReminderReceiver::class.java
@@ -122,6 +122,12 @@ object Preferences {
             alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP, hourOfDay.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent
             )
+        }
+    }
+
+    private fun cancelAlarm(alarmManager: AlarmManager, pendingIntent: PendingIntent?) {
+        if (pendingIntent != null) {
+            alarmManager.cancel(pendingIntent)
         }
     }
 }
