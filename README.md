@@ -12,7 +12,7 @@ Just run in Android Studio or download Release version in Release.
 - Kotlin
 - RxJava2
 - Retrofit2
-- Dagger2
+- Dagger2 for Dependency Injection
 - etc.
 
 ## Next Implementation
