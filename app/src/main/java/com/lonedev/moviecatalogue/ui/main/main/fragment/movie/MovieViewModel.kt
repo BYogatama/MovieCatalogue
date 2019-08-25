@@ -26,14 +26,6 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
 
     lateinit var disposableObserver: DisposableObserver<List<MovieResult>>
 
-    fun onSuccessGetMovies(): LiveData<List<MovieResult>> {
-        return movieResult
-    }
-
-    fun onErrorGetMovies(): LiveData<String> {
-        return movieError
-    }
-
     fun getMovies() {
 
         disposableObserver = object : DisposableObserver<List<MovieResult>>() {
@@ -55,6 +47,14 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(400, TimeUnit.MILLISECONDS)
             .subscribe(disposableObserver)
+    }
+
+    fun onSuccessGetMovies(): LiveData<List<MovieResult>> {
+        return movieResult
+    }
+
+    fun onErrorGetMovies(): LiveData<String> {
+        return movieError
     }
 
     fun disposeElements() {

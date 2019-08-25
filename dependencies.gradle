@@ -57,9 +57,11 @@ ext {
     // Firebase
     firebaseDispatcher = 'com.firebase:firebase-jobdispatcher:0.8.5'
 
+    mockK = 'io.mockk:mockk:1.9'
 
     junit = "junit:junit:4.12"
-    mockito = "org.mockito:mockito-core:2.8.47"
+    mockito = "org.mockito:mockito-core:3.0.0"
+    mockitoInline = "org.mockito:mockito-inline:3.0.0"
     androidTestRunner = 'androidx.test:runner:1.1.1'
     androidTestEspressoCore = 'androidx.test.espresso:espresso-core:3.1.1'
 }

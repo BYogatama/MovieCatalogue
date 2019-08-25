@@ -77,11 +77,13 @@ class MovieFragment : BaseFragment() {
 
     private fun getMovies() {
         viewModel.getMovies()
+
         viewModel.onSuccessGetMovies().observe(this,
             Observer<List<MovieResult>> {
                 listAdapter.movies = it
                 setupRecyclerView(2)
             })
+
         viewModel.onErrorGetMovies().observe(this, Observer<String> {
             displaySnackBar(it)
         })

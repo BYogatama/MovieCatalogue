@@ -18,7 +18,6 @@ import javax.inject.Singleton
 @Component(
     modules = [
         (AppModule::class),
-        (NetworkModule::class),
         (ActivityBuildersModule::class),
         (FragmentBuildersModule::class),
         (ViewModelFactoryModule::class),

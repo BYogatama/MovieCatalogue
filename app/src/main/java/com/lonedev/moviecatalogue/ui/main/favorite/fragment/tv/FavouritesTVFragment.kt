@@ -36,11 +36,11 @@ class FavouritesTVFragment : BaseFragment() {
     private lateinit var viewModel: FavouritesTVViewModel
     private lateinit var listAdapter: ListAdapter<TVSeriesResult>
 
-    @BindView(R.id.list_item)
+    @BindView(R.id.favourties_tv_list)
     lateinit var recMovies: RecyclerView
 
     override fun layoutResources(): Int {
-        return R.layout.fragment_movie_favorites
+        return R.layout.fragment_tv_favorites
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

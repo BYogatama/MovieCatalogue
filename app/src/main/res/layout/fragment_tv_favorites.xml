@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Created by Bagus Yogatama on 6/24/19 11:49 AM
+  ~ Created by Bagus Yogatama on 8/25/19 11:29 AM
   ~ Copyright (c) 2019 . All rights reserved.
-  ~ Last modified 6/24/19 11:49 AM
+  ~ Last modified 8/25/19 2:36 AM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/favourties_movie_list"
+            android:id="@+id/favourties_tv_list"
             android:paddingStart="8dp"
             android:paddingTop="8dp"
             android:paddingEnd="8dp"
