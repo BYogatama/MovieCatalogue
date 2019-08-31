@@ -9,15 +9,19 @@ package com.lonedev.moviecatalogue.ui.main.main.fragment.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lonedev.moviecatalogue.data.repositories.SearchRepository
+import com.lonedev.moviecatalogue.base.shceduler.BaseSchedulerProvider
 import com.lonedev.moviecatalogue.data.models.SearchResult
+import com.lonedev.moviecatalogue.data.repositories.SearchRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(private val searchRepository: SearchRepository) : ViewModel() {
+class SearchViewModel @Inject constructor(
+    private val searchRepository: SearchRepository,
+    private val schedulerProvider: BaseSchedulerProvider
+) : ViewModel() {
 
     var searchResult: MutableLiveData<List<SearchResult>> = MutableLiveData()
     var searchError: MutableLiveData<String> = MutableLiveData()
@@ -50,8 +54,8 @@ class SearchViewModel @Inject constructor(private val searchRepository: SearchRe
         }
 
         searchRepository.search(query)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
             .debounce(400, TimeUnit.MILLISECONDS)
             .subscribe(disposableObserver)
 

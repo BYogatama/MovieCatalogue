@@ -52,9 +52,9 @@ class MovieRepository @Inject constructor(
                 return@map it.results
             }
             .doOnNext {
-//                for (item in it) {
-//                    moviesDao.saveMovie(item)
-//                }
+                for (item in it) {
+                    moviesDao.saveMovie(item)
+                }
             }
     }
 

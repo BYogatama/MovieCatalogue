@@ -9,31 +9,32 @@ package com.lonedev.moviecatalogue.ui.main.main.fragment.tv
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lonedev.moviecatalogue.base.shceduler.BaseSchedulerProvider
 import com.lonedev.moviecatalogue.data.repositories.TVSeriesRepository
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TVSeriesViewModel @Inject constructor(private val tvSeriesRepository: TVSeriesRepository) : ViewModel() {
+class TVSeriesViewModel @Inject constructor(
+    private val tvSeriesRepository: TVSeriesRepository,
+    private val schedulerProvider: BaseSchedulerProvider) : ViewModel() {
 
     var tvSeriesResult: MutableLiveData<List<TVSeriesResult>> = MutableLiveData()
     var tvSeriesError: MutableLiveData<String> = MutableLiveData()
     lateinit var disposableObserver: DisposableObserver<List<TVSeriesResult>>
 
-    fun tvSeriesResult(): LiveData<List<TVSeriesResult>> {
+    fun onSuccessGetTVSeries(): LiveData<List<TVSeriesResult>> {
         return tvSeriesResult
     }
 
-    fun tvSeriesError(): LiveData<String> {
+    fun onErrorGetTVSeries(): LiveData<String> {
         return tvSeriesError
     }
 
-    fun loadTVSeries() {
+    fun getTVSeries() {
 
         disposableObserver = object : DisposableObserver<List<TVSeriesResult>>() {
             override fun onComplete() {
@@ -48,9 +49,10 @@ class TVSeriesViewModel @Inject constructor(private val tvSeriesRepository: TVSe
             }
         }
 
+
         tvSeriesRepository.getTvSeries()
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
             .debounce(400, TimeUnit.MILLISECONDS)
             .subscribe(disposableObserver)
     }

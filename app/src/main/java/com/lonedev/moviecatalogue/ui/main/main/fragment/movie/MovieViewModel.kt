@@ -6,32 +6,28 @@
 
 package com.lonedev.moviecatalogue.ui.main.main.fragment.movie
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.shceduler.BaseSchedulerProvider
-import com.lonedev.moviecatalogue.data.repositories.MovieRepository
 import com.lonedev.moviecatalogue.data.models.MovieResult
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.lonedev.moviecatalogue.data.repositories.MovieRepository
 import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class MovieViewModel @Inject constructor(
-    private val context: Context,
-    private val movieRepository: MovieRepository) : ViewModel() {
+    private val movieRepository: MovieRepository,
+    private val schedulerProvider: BaseSchedulerProvider) : ViewModel() {
 
     var movieResult: MutableLiveData<List<MovieResult>> = MutableLiveData()
     var movieError: MutableLiveData<String> = MutableLiveData()
 
     lateinit var disposableObserver: DisposableObserver<List<MovieResult>>
-    
-    fun getMovies(schedulerProvider: BaseSchedulerProvider?) {
+
+    fun getMovies() {
         disposableObserver = object : DisposableObserver<List<MovieResult>>() {
             override fun onComplete() {
             }
@@ -46,15 +42,11 @@ class MovieViewModel @Inject constructor(
             }
         }
 
-        if(schedulerProvider != null) {
-            movieRepository.getMovies()
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .debounce(400, TimeUnit.MILLISECONDS)
-                .subscribe(disposableObserver)
-        }else{
-            movieError.postValue(context.getString(R.string.general_error))
-        }
+        movieRepository.getMovies()
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
+            .debounce(400, TimeUnit.MILLISECONDS)
+            .subscribe(disposableObserver)
     }
 
     fun onSuccessGetMovies(): LiveData<List<MovieResult>> {

@@ -1,6 +1,8 @@
 package com.lonedev.moviecatalogue.di.modules
 
 import com.lonedev.moviecatalogue.BuildConfig
+import com.lonedev.moviecatalogue.base.shceduler.BaseSchedulerProvider
+import com.lonedev.moviecatalogue.base.shceduler.SchedulerProvider
 import com.lonedev.moviecatalogue.data.remote.MovieApi
 import dagger.Module
 import dagger.Provides
@@ -32,5 +34,11 @@ class NetworkModule {
     @Singleton
     fun provideMovieApi(retrofit: Retrofit): MovieApi {
         return retrofit.create(MovieApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideScheduler() : BaseSchedulerProvider{
+        return SchedulerProvider()
     }
 }

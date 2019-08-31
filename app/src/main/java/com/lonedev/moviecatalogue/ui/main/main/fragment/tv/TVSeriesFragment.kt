@@ -18,6 +18,7 @@ import butterknife.BindView
 import com.bumptech.glide.RequestManager
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseFragment
+import com.lonedev.moviecatalogue.base.shceduler.SchedulerProvider
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import com.lonedev.moviecatalogue.ui.adapter.ListAdapter
 import com.lonedev.moviecatalogue.ui.main.details.tvseries.TVSeriesDetailActivity
@@ -76,15 +77,15 @@ class TVSeriesFragment : BaseFragment() {
     }
 
     private fun getTVSeries() {
-        viewModel.loadTVSeries()
+        viewModel.getTVSeries()
 
-        viewModel.tvSeriesResult().observe(this,
+        viewModel.onSuccessGetTVSeries().observe(this,
             Observer<List<TVSeriesResult>> {
                 listAdapter.movies = it
                 setupRecyclerView(2)
             })
 
-        viewModel.tvSeriesError().observe(this, Observer<String> {
+        viewModel.onErrorGetTVSeries().observe(this, Observer<String> {
             displaySnackBar(it)
         })
     }

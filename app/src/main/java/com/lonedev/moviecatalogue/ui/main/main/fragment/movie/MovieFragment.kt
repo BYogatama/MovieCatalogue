@@ -77,7 +77,7 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun getMovies() {
-        viewModel.getMovies(SchedulerProvider())
+        viewModel.getMovies()
 
         viewModel.onSuccessGetMovies().observe(this,
             Observer<List<MovieResult>> {

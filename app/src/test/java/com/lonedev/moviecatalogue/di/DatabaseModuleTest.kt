@@ -21,7 +21,7 @@ import javax.inject.Singleton
 class DatabaseModuleTest {
     @Singleton
     @Provides
-    fun provideRoomDatabase(context: Context): AppDatabase {
+    fun provideRoomDatabase(): AppDatabase {
         return Room.inMemoryDatabaseBuilder(mock(Context::class.java), AppDatabase::class.java)
             .build()
     }
