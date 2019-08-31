@@ -6,7 +6,8 @@
 
 package com.lonedev.moviecatalogue.di
 
-import com.lonedev.moviecatalogue.MovieFragmentTest
+import com.lonedev.moviecatalogue.MovieListTest
+import com.lonedev.moviecatalogue.TVListTest
 import dagger.Component
 import javax.inject.Singleton
 
@@ -15,5 +16,6 @@ import javax.inject.Singleton
     modules = [AppModuleTest::class]
 )
 interface TestComponent {
-    fun movieFragmentTest(movieFragmentTest: MovieFragmentTest)
+    fun movieFragmentTest(movieListTest: MovieListTest)
+    fun tvSeriesFragmentTest(tvListTest: TVListTest)
 }

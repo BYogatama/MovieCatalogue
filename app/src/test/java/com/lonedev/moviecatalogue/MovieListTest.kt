@@ -6,18 +6,19 @@
 
 package com.lonedev.moviecatalogue
 
-import androidx.lifecycle.LiveData
 import com.lonedev.moviecatalogue.data.local.dao.MoviesDao
 import com.lonedev.moviecatalogue.data.remote.MovieApi
 import com.lonedev.moviecatalogue.data.repositories.MovieRepository
 import com.lonedev.moviecatalogue.di.DaggerTestComponent
-import com.lonedev.moviecatalogue.ui.main.main.fragment.movie.MovieViewModel
-import com.lonedev.moviecatalogue.utils.OneTimeObserver
+import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 import javax.inject.Inject
 
-class MovieFragmentTest {
+@RunWith(JUnit4::class)
+class MovieListTest {
 
     @Inject
     lateinit var movieApi: MovieApi
@@ -25,7 +26,6 @@ class MovieFragmentTest {
     lateinit var moviesDao: MoviesDao
 
     private lateinit var movieRepository: MovieRepository
-    private lateinit var movieViewModel: MovieViewModel
 
     @Before
     fun setUp() {
@@ -33,16 +33,23 @@ class MovieFragmentTest {
             .build().movieFragmentTest(this)
 
         movieRepository = MovieRepository(movieApi, moviesDao)
-        movieViewModel = MovieViewModel(movieRepository)
     }
 
     @Test
-    fun testGetMovies() {
+    fun `getMovies from network and make sure has value`() {
+        movieRepository.getMoviesFromNetwork().test()
+            .assertValue {
+                it.isNotEmpty()
+            }
     }
 
-    private fun <T> LiveData<T>.observeOnce(onChangeHandler: (T) -> Unit) {
-        val observer = OneTimeObserver(handler = onChangeHandler)
-        observe(observer, observer)
+    @Test
+    fun `getMovies from network and make sure initial size more than 10`() {
+        movieRepository.getMoviesFromNetwork().test()
+            .assertValue {
+                it.size > 10
+            }
     }
+
 
 }

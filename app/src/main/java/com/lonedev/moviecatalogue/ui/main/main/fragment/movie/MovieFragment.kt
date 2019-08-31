@@ -18,6 +18,7 @@ import butterknife.BindView
 import com.bumptech.glide.RequestManager
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseFragment
+import com.lonedev.moviecatalogue.base.shceduler.SchedulerProvider
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.ui.adapter.ListAdapter
 import com.lonedev.moviecatalogue.ui.main.details.movie.MovieDetailActivity
@@ -76,7 +77,7 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun getMovies() {
-        viewModel.getMovies()
+        viewModel.getMovies(SchedulerProvider())
 
         viewModel.onSuccessGetMovies().observe(this,
             Observer<List<MovieResult>> {

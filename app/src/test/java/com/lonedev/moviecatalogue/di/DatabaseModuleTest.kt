@@ -14,6 +14,7 @@ import com.lonedev.moviecatalogue.data.local.dao.MoviesDao
 import com.lonedev.moviecatalogue.data.local.dao.TVSeriesDao
 import dagger.Module
 import dagger.Provides
+import org.mockito.Mockito.mock
 import javax.inject.Singleton
 
 @Module
@@ -21,7 +22,7 @@ class DatabaseModuleTest {
     @Singleton
     @Provides
     fun provideRoomDatabase(context: Context): AppDatabase {
-        return Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+        return Room.inMemoryDatabaseBuilder(mock(Context::class.java), AppDatabase::class.java)
             .build()
     }
 

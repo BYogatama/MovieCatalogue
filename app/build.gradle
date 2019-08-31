@@ -38,6 +38,10 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 }
 
 dependencies {
@@ -94,6 +98,8 @@ dependencies {
     testImplementation rootProject.ext.mockitoInline
     testImplementation rootProject.ext.mockK
     testImplementation 'junit:junit:4.12'
+    testImplementation 'com.jraska.livedata:testing-ktx:1.1.0'
+    androidTestImplementation 'androidx.test:core:1.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'

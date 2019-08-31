@@ -10,12 +10,12 @@ import android.content.Context
 import com.lonedev.moviecatalogue.di.modules.NetworkModule
 import dagger.Module
 import dagger.Provides
-import io.mockk.mockk
+import org.mockito.Mockito.mock
 import javax.inject.Singleton
 
 @Module(includes = [NetworkModule::class, DatabaseModuleTest::class])
 class AppModuleTest {
     @Singleton
     @Provides
-    fun provideAppContext(): Context = mockk()
+    fun provideAppContext(): Context = mock(Context::class.java)
 }

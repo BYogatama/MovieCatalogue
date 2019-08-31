@@ -7,6 +7,8 @@
 package com.lonedev.moviecatalogue.data.repositories
 
 import com.lonedev.moviecatalogue.BuildConfig
+import com.lonedev.moviecatalogue.base.shceduler.BaseSchedulerProvider
+import com.lonedev.moviecatalogue.base.shceduler.SchedulerProvider
 import com.lonedev.moviecatalogue.data.local.dao.MoviesDao
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.Video
@@ -36,7 +38,7 @@ class MovieRepository @Inject constructor(
      *     for usage in MovieViewModel. MovieApi is Injected using DI in this class
      *     so it can be use directly in this class
      */
-    private fun getMoviesFromNetwork(): Observable<List<MovieResult>> {
+    fun getMoviesFromNetwork(): Observable<List<MovieResult>> {
 
         var language = Locale.getDefault().toString()
         language = language.replace("_", "-")
@@ -50,9 +52,9 @@ class MovieRepository @Inject constructor(
                 return@map it.results
             }
             .doOnNext {
-                for (item in it) {
-                    moviesDao.saveMovie(item)
-                }
+//                for (item in it) {
+//                    moviesDao.saveMovie(item)
+//                }
             }
     }
 
@@ -61,7 +63,7 @@ class MovieRepository @Inject constructor(
      *     for usage in MovieViewModel. MovieDao is Injected using DI in this class
      *     so it can be use directly in this class
      */
-    private fun getMoviesFromLocal(): Observable<List<MovieResult>> {
+    fun getMoviesFromLocal(): Observable<List<MovieResult>> {
         return moviesDao.getMovies().toObservable()
     }
 
