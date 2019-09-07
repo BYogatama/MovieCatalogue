@@ -18,7 +18,7 @@ import butterknife.ButterKnife
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseActivity
-import com.lonedev.moviecatalogue.ui.main.favorite.fragment.FavoriteActivity
+import com.lonedev.moviecatalogue.ui.main.favorite.FavoriteActivity
 import com.lonedev.moviecatalogue.ui.main.main.fragment.movie.MovieFragment
 import com.lonedev.moviecatalogue.ui.main.main.fragment.search.SearchFragment
 import com.lonedev.moviecatalogue.ui.main.main.fragment.tv.TVSeriesFragment

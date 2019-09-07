@@ -11,8 +11,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseBroadcastReceiver
-import com.lonedev.moviecatalogue.ui.main.favorite.fragment.FavoriteActivity
-import java.util.*
+import com.lonedev.moviecatalogue.ui.main.favorite.FavoriteActivity
 
 class DailyReminderReceiver : BaseBroadcastReceiver<String>() {
 

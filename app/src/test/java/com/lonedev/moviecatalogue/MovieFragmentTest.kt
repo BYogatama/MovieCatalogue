@@ -49,7 +49,21 @@ class MovieFragmentTest {
     }
 
     @Test
+    fun getMoviesFromNetwork(){
+        movieRepository.getMoviesFromNetwork().test()
+            .assertValue{
+                it.isNotEmpty()
+            }
+
+        movieRepository.getMoviesFromNetwork().test()
+            .assertValue{
+                it.size > 10
+            }
+    }
+
+    @Test
     fun getMovies() {
+        movieViewModel.getMovies()
         movieViewModel.onSuccessGetMovies().observeForever {
             it.isNotEmpty()
         }

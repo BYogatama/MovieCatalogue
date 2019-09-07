@@ -31,5 +31,6 @@
     <string name="looking_for">Mencari Film atau TV?\nLangsung cari dan submit!</string>
     <string name="no_tv_released">Tidak ada TV yang rilis hari ini</string>
     <string name="no_movie_released">Tidak ada Film yang rilis hari ini</string>
-    <string name="general_error">Something went wrong, please try again later</string>
+    <string name="general_error">Terjadi kesalahan, coba lagi nanti</string>
+    <string name="videos">Video</string>
 </resources>

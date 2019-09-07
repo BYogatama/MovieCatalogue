@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [AppModuleTest::class]
+    modules = [AppModuleTest::class, DatabaseModuleTest::class]
 )
 interface TestComponent {
     fun movieFragmentTest(movieFragmentTest: MovieFragmentTest)

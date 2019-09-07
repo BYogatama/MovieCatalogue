@@ -40,11 +40,11 @@ class SearchFragmentTest {
 
         searchRepository = SearchRepository(movieApi)
         searcViewModel = SearchViewModel(searchRepository, TestSchedulerProvider(testScheduler))
-        searcViewModel.search("batman")
     }
 
     @Test
     fun searchMoviesTVs() {
+        searcViewModel.search("batman")
         searcViewModel.onSuccessSearch().observeForever {
             !it.isNullOrEmpty()
         }

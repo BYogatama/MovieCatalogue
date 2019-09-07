@@ -46,11 +46,11 @@ class TVSeriesFragmentTest {
             tvSeriesReporsitory,
             TestSchedulerProvider(testScheduler)
         )
-        tvSeriesViewModel.getTVSeries()
     }
 
     @Test
     fun getTVSeries() {
+        tvSeriesViewModel.getTVSeries()
         tvSeriesViewModel.onSuccessGetTVSeries().observeForever {
             it.isNotEmpty()
         }

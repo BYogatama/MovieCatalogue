@@ -49,7 +49,7 @@
         </activity>
         <activity android:name=".ui.main.details.movie.MovieDetailActivity"/>
         <activity android:name=".ui.main.details.tvseries.TVSeriesDetailActivity"/>
-        <activity android:name=".ui.main.favorite.fragment.FavoriteActivity"/>
+        <activity android:name=".ui.main.favorite.FavoriteActivity"/>
         <activity android:name=".ui.main.settings.SettingsActivity"/>
 
         <provider
