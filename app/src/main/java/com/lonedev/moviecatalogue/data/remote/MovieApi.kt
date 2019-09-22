@@ -14,16 +14,18 @@ import retrofit2.http.Query
 
 interface MovieApi {
 
-    @GET("discover/movie")
+    @GET("discover/movie?sort_by=release_date.asc")
     fun getMovies(
         @Query("api_key") apiKey: String,
-        @Query("language") language: String
+        @Query("language") language: String,
+        @Query("page") page : Int
     ): Observable<Movie<MovieResult>>
 
-    @GET("discover/tv")
+    @GET("discover/tv?sort_by=release_date.asc")
     fun getTvSeries(
         @Query("api_key") apiKey: String,
-        @Query("language") language: String
+        @Query("language") language: String,
+        @Query("page") page : Int
     ): Observable<Movie<TVSeriesResult>>
 
     @GET("movie/{movie_id}/videos")

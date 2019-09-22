@@ -9,9 +9,12 @@ package com.lonedev.moviecatalogue.ui.main.main.fragment.tv
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.lonedev.moviecatalogue.base.shceduler.BaseSchedulerProvider
 import com.lonedev.moviecatalogue.data.repositories.TVSeriesRepository
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
+import io.reactivex.Observable
 import io.reactivex.observers.DisposableObserver
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -19,46 +22,25 @@ import javax.inject.Singleton
 
 @Singleton
 class TVSeriesViewModel @Inject constructor(
-    private val tvSeriesRepository: TVSeriesRepository,
+    private val repository: TVSeriesRepository,
     private val schedulerProvider: BaseSchedulerProvider) : ViewModel() {
 
-    var tvSeriesResult: MutableLiveData<List<TVSeriesResult>> = MutableLiveData()
-    var tvSeriesError: MutableLiveData<String> = MutableLiveData()
-    lateinit var disposableObserver: DisposableObserver<List<TVSeriesResult>>
+    fun onGetTVSeries(): LiveData<PagedList<TVSeriesResult>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setPrefetchDistance(10)
+            .setPageSize(10)
+            .build()
 
-    fun onSuccessGetTVSeries(): LiveData<List<TVSeriesResult>> {
-        return tvSeriesResult
+        return LivePagedListBuilder(repository.getDataSourceFactory(), config).build()
     }
 
-    fun onErrorGetTVSeries(): LiveData<String> {
-        return tvSeriesError
-    }
-
-    fun getTVSeries() {
-
-        disposableObserver = object : DisposableObserver<List<TVSeriesResult>>() {
-            override fun onComplete() {
-            }
-
-            override fun onNext(tvSeries: List<TVSeriesResult>) {
-                tvSeriesResult.postValue(tvSeries)
-            }
-
-            override fun onError(e: Throwable) {
-                tvSeriesError.postValue(e.message)
-            }
-        }
-
-
-        tvSeriesRepository.getTvSeries()
+    fun getTVSeries(page : Int): Observable<List<TVSeriesResult>> {
+        return repository.getTVSeriesFromNetwork(page)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .debounce(400, TimeUnit.MILLISECONDS)
-            .subscribe(disposableObserver)
     }
 
-    fun disposeElements() {
-        if (!disposableObserver.isDisposed) disposableObserver.dispose()
-    }
 
 }

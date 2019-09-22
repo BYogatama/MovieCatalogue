@@ -1,20 +1,20 @@
 /*
- * Created by Bagus Yogatama on 8/23/19 12:11 AM
+ * Created by Bagus Yogatama on 9/22/19 10:53 PM
  * Copyright (c) 2019 . All rights reserved.
- * Last modified 8/23/19 12:11 AM
+ * Last modified 8/31/19 5:13 PM
  */
 
-package com.lonedev.moviecatalogue.di
+package com.lonedev.moviecatalogue.db.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import com.lonedev.moviecatalogue.data.local.AppDatabase
 import com.lonedev.moviecatalogue.data.local.dao.FavouritesDao
 import com.lonedev.moviecatalogue.data.local.dao.MoviesDao
 import com.lonedev.moviecatalogue.data.local.dao.TVSeriesDao
 import dagger.Module
 import dagger.Provides
-import org.mockito.Mockito.mock
 import javax.inject.Singleton
 
 @Module
@@ -22,8 +22,11 @@ class DatabaseModuleTest {
     @Singleton
     @Provides
     fun provideRoomDatabase(): AppDatabase {
-        return Room.inMemoryDatabaseBuilder(mock(Context::class.java), AppDatabase::class.java)
-            .build()
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        return Room.inMemoryDatabaseBuilder(
+            context,
+            AppDatabase::class.java
+        ).build()
     }
 
     @Provides

@@ -12,22 +12,23 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import com.bumptech.glide.RequestManager
 import com.lonedev.moviecatalogue.R
 import com.lonedev.moviecatalogue.base.BaseFragment
-import com.lonedev.moviecatalogue.base.shceduler.SchedulerProvider
 import com.lonedev.moviecatalogue.data.models.MovieResult
-import com.lonedev.moviecatalogue.ui.adapter.ListAdapter
+import com.lonedev.moviecatalogue.ui.adapter.MovieListAdapter
 import com.lonedev.moviecatalogue.ui.main.details.movie.MovieDetailActivity
-import com.lonedev.moviecatalogue.utils.OnItemClickListener
 import com.lonedev.moviecatalogue.utils.ViewModelFactory
+import com.paginate.Paginate
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_movie.*
 import javax.inject.Inject
 
-class MovieFragment : BaseFragment() {
+class MovieFragment : BaseFragment(), Paginate.Callbacks {
 
     @Inject
     lateinit var requestManager: RequestManager
@@ -35,7 +36,13 @@ class MovieFragment : BaseFragment() {
     lateinit var factory: ViewModelFactory
 
     private lateinit var viewModel: MovieViewModel
-    private lateinit var listAdapter: ListAdapter<MovieResult>
+    private lateinit var listAdapter: MovieListAdapter
+
+    private var page = 1
+    private var isLoading = false
+    private var hasLoadedAllItems = false
+
+    private val compositeDisposable = CompositeDisposable()
 
     @BindView(R.id.list_item)
     lateinit var recMovies: RecyclerView
@@ -49,7 +56,8 @@ class MovieFragment : BaseFragment() {
 
         viewModel = ViewModelProviders.of(this, factory).get(MovieViewModel::class.java)
 
-        listAdapter = ListAdapter(getBaseActivity())
+        listAdapter = MovieListAdapter(getBaseActivity())
+        setupRecyclerView(2)
 
         getMovies()
     }
@@ -57,42 +65,31 @@ class MovieFragment : BaseFragment() {
     private fun setupRecyclerView(gridCount: Int) {
         listAdapter.requestManager = requestManager
 
-        listAdapter.onItemClickListener = object : OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                openMovieDetail(position)
-            }
-        }
+        listAdapter.onItemClickListener = ({ movie ->
+            openMovieDetail(movie)
+        })
 
         recMovies.layoutManager = GridLayoutManager(getBaseActivity(), gridCount)
         recMovies.adapter = listAdapter
+
+        Paginate.with(recMovies, this).build()
 
         recMovies.visibility = View.VISIBLE
         progress.visibility = View.GONE
     }
 
-    private fun openMovieDetail(position: Int) {
+    private fun openMovieDetail(movie: MovieResult) {
         val detail = Intent(getBaseActivity(), MovieDetailActivity::class.java)
-        detail.putExtra("movie", listAdapter.movies[position])
+        detail.putExtra("movie", movie)
         startActivity(detail)
     }
 
     private fun getMovies() {
-        viewModel.getMovies()
-
-        viewModel.onSuccessGetMovies().observe(this,
-            Observer<List<MovieResult>> {
-                listAdapter.movies = it
-                setupRecyclerView(2)
+        viewModel.getMovies(page).subscribe()
+        viewModel.onGetMovies().observe(this,
+            Observer<PagedList<MovieResult>> {
+                listAdapter.submitList(it)
             })
-
-        viewModel.onErrorGetMovies().observe(this, Observer<String> {
-            displaySnackBar(it)
-        })
-    }
-
-    override fun onDestroyView() {
-        viewModel.disposeElements()
-        super.onDestroyView()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -103,5 +100,26 @@ class MovieFragment : BaseFragment() {
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             setupRecyclerView(2)
         }
+    }
+
+    override fun onLoadMore() {
+        if (!isLoading) {
+            isLoading = true
+            compositeDisposable.add(
+                viewModel.getMovies(page++)
+                    .subscribe {
+                        isLoading = false
+                    }
+            )
+        }
+    }
+
+    override fun isLoading(): Boolean = isLoading
+
+    override fun hasLoadedAllItems(): Boolean = hasLoadedAllItems
+
+    override fun onDestroy() {
+        if (!compositeDisposable.isDisposed) compositeDisposable.dispose()
+        super.onDestroy()
     }
 }

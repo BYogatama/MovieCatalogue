@@ -11,8 +11,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.lonedev.moviecatalogue.service.DailyReminderReceiver
-import com.lonedev.moviecatalogue.service.MovieReleaseReminderReceiver
-import com.lonedev.moviecatalogue.service.TVSeriesReleaseReminder
 import java.util.*
 
 object Preferences {
@@ -31,64 +29,6 @@ object Preferences {
                 context,
                 DailyReminderReceiver.NOTIFICATION_ID,
                 DailyReminderReceiver::class.java
-            )
-        )
-    }
-
-    fun setupMovieReleaseReminder(context: Context?) {
-        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        val hourOfDay = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 8)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-        }
-
-        createAlarm(
-            alarmManager, hourOfDay, getPendingIntent(
-                context,
-                MovieReleaseReminderReceiver.NOTIFICATION_ID,
-                MovieReleaseReminderReceiver::class.java
-            )
-        )
-    }
-
-    fun setupTVSeriesReleaseReminder(context: Context?) {
-        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        val hourOfDay = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 8)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-        }
-
-        createAlarm(
-            alarmManager, hourOfDay, getPendingIntent(
-                context,
-                TVSeriesReleaseReminder.NOTIFICATION_ID,
-                TVSeriesReleaseReminder::class.java
-            )
-        )
-    }
-
-    fun disableMovieReleaseReminder(context: Context?) {
-        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        cancelAlarm(
-            alarmManager, getPendingIntent(
-                context,
-                MovieReleaseReminderReceiver.NOTIFICATION_ID,
-                MovieReleaseReminderReceiver::class.java
-            )
-        )
-    }
-
-    fun disableTVSeriesReleaseReminder(context: Context?) {
-        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        cancelAlarm(
-            alarmManager, getPendingIntent(
-                context,
-                TVSeriesReleaseReminder.NOTIFICATION_ID,
-                TVSeriesReleaseReminder::class.java
             )
         )
     }

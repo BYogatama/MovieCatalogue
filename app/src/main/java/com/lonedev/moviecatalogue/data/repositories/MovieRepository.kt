@@ -6,9 +6,8 @@
 
 package com.lonedev.moviecatalogue.data.repositories
 
+import androidx.paging.DataSource
 import com.lonedev.moviecatalogue.BuildConfig
-import com.lonedev.moviecatalogue.base.shceduler.BaseSchedulerProvider
-import com.lonedev.moviecatalogue.base.shceduler.SchedulerProvider
 import com.lonedev.moviecatalogue.data.local.dao.MoviesDao
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.Video
@@ -27,18 +26,7 @@ class MovieRepository @Inject constructor(
     private val moviesDao: MoviesDao
 ) {
 
-    fun getMovies(): Observable<List<MovieResult>> {
-        val observableFromNetwork = getMoviesFromNetwork()
-        val observableFromLocal = getMoviesFromLocal()
-        return Observable.concatArrayEager(observableFromNetwork, observableFromLocal)
-    }
-
-    /**
-     * Get Movies from Network and return it as Observable<List<MovieResult>>
-     *     for usage in MovieViewModel. MovieApi is Injected using DI in this class
-     *     so it can be use directly in this class
-     */
-    fun getMoviesFromNetwork(): Observable<List<MovieResult>> {
+    fun getMoviesFromNetwork(page : Int): Observable<List<MovieResult>> {
 
         var language = Locale.getDefault().toString()
         language = language.replace("_", "-")
@@ -47,7 +35,7 @@ class MovieRepository @Inject constructor(
             language = "id-ID"
         }
 
-        return movieApi.getMovies(BuildConfig.API_KEY, language)
+        return movieApi.getMovies(BuildConfig.API_KEY, language, page)
             .map {
                 return@map it.results
             }
@@ -58,13 +46,9 @@ class MovieRepository @Inject constructor(
             }
     }
 
-    /**
-     * Get Movies from LocalDB and return it as Observable<List<MovieResult>>
-     *     for usage in MovieViewModel. MovieDao is Injected using DI in this class
-     *     so it can be use directly in this class
-     */
-    fun getMoviesFromLocal(): Observable<List<MovieResult>> {
-        return moviesDao.getMovies().toObservable()
+
+    fun getDataSourceFactory(): DataSource.Factory<Int, MovieResult> {
+        return moviesDao.getMovies()
     }
 
     fun getMovieVideos(movieId: Int): Observable<Video<VideoResult>> {

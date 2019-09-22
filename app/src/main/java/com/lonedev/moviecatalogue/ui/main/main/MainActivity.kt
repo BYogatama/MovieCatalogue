@@ -91,25 +91,11 @@ class MainActivity : BaseActivity() {
     private fun getDefaultSettings() {
         val sharedPreference = PreferenceManager.getDefaultSharedPreferences(this)
         val isDailyReminderOn = sharedPreference.getBoolean("daily_reminder", false)
-        val isMovieReleaseReminderOn = sharedPreference.getBoolean("movie_release_reminder", false)
-        val isTVReleaseReminderOn = sharedPreference.getBoolean("tv_release_reminder", false)
 
         if (isDailyReminderOn) {
             Preferences.setupDailyReminder(this)
         } else {
             Preferences.disableDailyReminder(this)
-        }
-
-        if (isMovieReleaseReminderOn) {
-            Preferences.setupMovieReleaseReminder(this)
-        } else {
-            Preferences.disableMovieReleaseReminder(this)
-        }
-
-        if (isTVReleaseReminderOn) {
-            Preferences.setupTVSeriesReleaseReminder(this)
-        } else {
-            Preferences.disableTVSeriesReleaseReminder(this)
         }
     }
 

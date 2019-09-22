@@ -6,6 +6,7 @@
 
 package com.lonedev.moviecatalogue.data.local.dao
 
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -16,7 +17,7 @@ import io.reactivex.Single
 @Dao
 interface TVSeriesDao {
     @Query("SELECT * FROM tvseries")
-    fun getTVSeries(): Single<List<TVSeriesResult>>
+    fun getTVSeries(): DataSource.Factory<Int, TVSeriesResult>
 
     @Query("SELECT * FROM tvseries WHERE id=:tvSeriesId")
     fun getTVSeries(tvSeriesId: Int): TVSeriesResult?

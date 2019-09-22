@@ -19,18 +19,6 @@
                 android:icon="@drawable/ic_clock_24dp"
                 android:defaultValue="true"/>
 
-        <SwitchPreference
-                app:key="movie_release_reminder"
-                app:title="@string/movie_release_reminder"
-                android:icon="@drawable/ic_clock_24dp"
-                android:defaultValue="true"/>
-
-        <SwitchPreference
-                app:key="tv_release_reminder"
-                app:title="@string/tv_release_reminder"
-                android:icon="@drawable/ic_clock_24dp"
-                android:defaultValue="true"/>
-
     </PreferenceCategory>
 
     <Preference
