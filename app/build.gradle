@@ -96,6 +96,7 @@ dependencies {
     implementation rootProject.ext.firebaseDispatcher
 
     implementation 'com.github.markomilos:paginate:0.5.1'
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
 
     testImplementation rootProject.ext.mockito
     testImplementation rootProject.ext.mockitoInline
@@ -104,8 +105,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest:2.1'
     testImplementation 'com.jraska.livedata:testing-ktx:1.1.0'
-    testImplementation 'androidx.arch.core:core-testing:2.0.1'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
     testImplementation "org.robolectric:robolectric:3.5.1"
+
+
     androidTestImplementation 'androidx.test:core:1.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

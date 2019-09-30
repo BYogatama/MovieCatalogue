@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lonedev.moviecatalogue.data.repositories.FavoriteRepository
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
+import com.lonedev.moviecatalogue.utils.IdlingResources
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -33,7 +34,6 @@ constructor(private val favoriteRepository: FavoriteRepository) : ViewModel() {
     }
 
     fun getFavorites() {
-
         disposableFavorite = object : DisposableObserver<List<TVSeriesResult>>() {
             override fun onComplete() {
             }

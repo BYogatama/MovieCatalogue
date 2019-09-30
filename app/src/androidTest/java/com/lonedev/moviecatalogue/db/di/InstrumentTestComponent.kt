@@ -8,6 +8,7 @@ package com.lonedev.moviecatalogue.db.di
 
 import com.lonedev.moviecatalogue.db.MovieFragmentUnitTest
 import com.lonedev.moviecatalogue.db.TVSeriesFragmentUnitTest
+import com.lonedev.moviecatalogue.ui.main.favourtie.movie.FavouriteMovieFragmentTest
 import dagger.Component
 import javax.inject.Singleton
 

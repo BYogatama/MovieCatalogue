@@ -12,9 +12,8 @@ import androidx.lifecycle.ViewModel
 import com.lonedev.moviecatalogue.base.shceduler.BaseSchedulerProvider
 import com.lonedev.moviecatalogue.data.models.SearchResult
 import com.lonedev.moviecatalogue.data.repositories.SearchRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.lonedev.moviecatalogue.utils.IdlingResources
 import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -38,9 +37,12 @@ class SearchViewModel @Inject constructor(
     }
 
     fun search(query: String?) {
-
+        IdlingResources.increment()
         disposableObserver = object : DisposableObserver<List<SearchResult>>() {
             override fun onComplete() {
+                if (!IdlingResources.getIdlingResource().isIdleNow) {
+                    IdlingResources.decrement()
+                }
             }
 
             override fun onNext(searchResults: List<SearchResult>) {

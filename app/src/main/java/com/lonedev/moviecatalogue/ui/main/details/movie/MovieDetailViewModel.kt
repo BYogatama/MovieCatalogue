@@ -16,6 +16,7 @@ import com.lonedev.moviecatalogue.data.repositories.MovieRepository
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult
+import com.lonedev.moviecatalogue.utils.IdlingResources
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.observers.DisposableObserver
@@ -70,14 +71,20 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     fun saveFavourites(context: Context, movieId: Int) {
-
+        IdlingResources.increment()
         disposableSaveFavourites = object : DisposableCompletableObserver() {
             override fun onComplete() {
                 favouritesResult.postValue(context.getString(R.string.success_favourties))
+                if(!IdlingResources.getIdlingResource().isIdleNow) {
+                    IdlingResources.decrement()
+                }
             }
 
             override fun onError(e: Throwable) {
                 favouritesResult.postValue(context.getString(R.string.failed_favourties))
+                if(!IdlingResources.getIdlingResource().isIdleNow) {
+                    IdlingResources.decrement()
+                }
             }
 
         }
@@ -88,14 +95,20 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     fun deleteFavourites(context: Context, movieId: Int) {
-
+        IdlingResources.increment()
         disposableDeleteFavourites = object : DisposableCompletableObserver() {
             override fun onComplete() {
                 favouritesResult.postValue(context.getString(R.string.success_remove_favourites))
+                if(!IdlingResources.getIdlingResource().isIdleNow) {
+                    IdlingResources.decrement()
+                }
             }
 
             override fun onError(e: Throwable) {
                 favouritesResult.postValue(context.getString(R.string.failed_remove_favourites))
+                if(!IdlingResources.getIdlingResource().isIdleNow) {
+                    IdlingResources.decrement()
+                }
             }
 
         }
@@ -106,14 +119,20 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     fun getFavouritedMovie(movieId: Int) {
-
+        IdlingResources.increment()
         disposableGetFavourites = object : DisposableSingleObserver<MovieResult>() {
             override fun onSuccess(t: MovieResult) {
                 getFavouritedResult.postValue(t)
+                if(!IdlingResources.getIdlingResource().isIdleNow) {
+                    IdlingResources.decrement()
+                }
             }
 
             override fun onError(e: Throwable) {
                 getFavouritedError.postValue(e.message)
+                if(!IdlingResources.getIdlingResource().isIdleNow) {
+                    IdlingResources.decrement()
+                }
             }
 
         }
@@ -124,9 +143,12 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     fun getVideos(movieId: Int) {
-
+        IdlingResources.increment()
         disposableObserver = object : DisposableObserver<Video<VideoResult>>() {
             override fun onComplete() {
+                if(!IdlingResources.getIdlingResource().isIdleNow) {
+                    IdlingResources.decrement()
+                }
             }
 
             override fun onNext(video: Video<VideoResult>) {

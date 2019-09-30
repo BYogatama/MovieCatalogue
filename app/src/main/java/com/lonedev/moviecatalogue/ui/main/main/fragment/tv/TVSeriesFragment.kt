@@ -84,7 +84,11 @@ class TVSeriesFragment : BaseFragment(), Paginate.Callbacks {
     }
 
     private fun getTVSeries() {
-        viewModel.getTVSeries(page).subscribe()
+        compositeDisposable.add(
+            viewModel.getTVSeries(page)
+                .subscribe({},Throwable::printStackTrace)
+        )
+
         viewModel.onGetTVSeries().observe(this,
             Observer<PagedList<TVSeriesResult>> {
                 listAdapter.submitList(it)
@@ -107,9 +111,9 @@ class TVSeriesFragment : BaseFragment(), Paginate.Callbacks {
             isLoading = true
             compositeDisposable.add(
                 viewModel.getTVSeries(page++)
-                    .subscribe {
+                    .subscribe({
                         isLoading = false
-                    }
+                    }, Throwable::printStackTrace)
             )
         }
     }

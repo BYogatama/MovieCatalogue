@@ -27,7 +27,6 @@ class MovieRepository @Inject constructor(
 ) {
 
     fun getMoviesFromNetwork(page : Int): Observable<List<MovieResult>> {
-
         var language = Locale.getDefault().toString()
         language = language.replace("_", "-")
 

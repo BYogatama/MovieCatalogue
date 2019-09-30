@@ -6,6 +6,7 @@
 
 package com.lonedev.moviecatalogue.ui.main.main.fragment.movie
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +15,7 @@ import androidx.paging.PagedList
 import com.lonedev.moviecatalogue.base.shceduler.BaseSchedulerProvider
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.repositories.MovieRepository
+import com.lonedev.moviecatalogue.utils.IdlingResources
 import io.reactivex.Observable
 import io.reactivex.observers.DisposableObserver
 import java.util.concurrent.TimeUnit
@@ -27,10 +29,16 @@ class MovieViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun getMovies(page: Int): Observable<List<MovieResult>> {
+        IdlingResources.increment()
         return repository.getMoviesFromNetwork(page)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .debounce(400, TimeUnit.MILLISECONDS)
+            .doOnNext {
+                if(!IdlingResources.getIdlingResource().isIdleNow) {
+                    IdlingResources.decrement()
+                }
+            }
     }
 
     fun onGetMovies(): LiveData<PagedList<MovieResult>> {

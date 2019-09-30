@@ -85,7 +85,11 @@ class MovieFragment : BaseFragment(), Paginate.Callbacks {
     }
 
     private fun getMovies() {
-        viewModel.getMovies(page).subscribe()
+        compositeDisposable.add(
+            viewModel.getMovies(page)
+                .subscribe({},Throwable::printStackTrace)
+        )
+
         viewModel.onGetMovies().observe(this,
             Observer<PagedList<MovieResult>> {
                 listAdapter.submitList(it)
@@ -107,9 +111,9 @@ class MovieFragment : BaseFragment(), Paginate.Callbacks {
             isLoading = true
             compositeDisposable.add(
                 viewModel.getMovies(page++)
-                    .subscribe {
+                    .subscribe ({
                         isLoading = false
-                    }
+                    }, Throwable::printStackTrace)
             )
         }
     }
