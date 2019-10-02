@@ -9,9 +9,12 @@ package com.lonedev.moviecatalogue.ui.main.main.fragment.movie
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.lonedev.moviecatalogue.base.shceduler.BaseSchedulerProvider
 import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.repositories.MovieRepository
+import io.reactivex.Observable
 import io.reactivex.observers.DisposableObserver
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -19,46 +22,25 @@ import javax.inject.Singleton
 
 @Singleton
 class MovieViewModel @Inject constructor(
-    private val movieRepository: MovieRepository,
-    private val schedulerProvider: BaseSchedulerProvider) : ViewModel() {
+    private val repository: MovieRepository,
+    private val schedulerProvider: BaseSchedulerProvider
+) : ViewModel() {
 
-    var movieResult: MutableLiveData<List<MovieResult>> = MutableLiveData()
-    var movieError: MutableLiveData<String> = MutableLiveData()
-
-    lateinit var disposableObserver: DisposableObserver<List<MovieResult>>
-
-    fun getMovies() {
-        disposableObserver = object : DisposableObserver<List<MovieResult>>() {
-            override fun onComplete() {
-            }
-
-            override fun onNext(movie: List<MovieResult>) {
-                movieResult.postValue(movie)
-            }
-
-            override fun onError(e: Throwable) {
-                movieError.postValue(e.message)
-                e.printStackTrace()
-            }
-        }
-
-        movieRepository.getMovies()
+    fun getMovies(page: Int): Observable<List<MovieResult>> {
+        return repository.getMoviesFromNetwork(page)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .debounce(400, TimeUnit.MILLISECONDS)
-            .subscribe(disposableObserver)
     }
 
-    fun onSuccessGetMovies(): LiveData<List<MovieResult>> {
-        return movieResult
-    }
+    fun onGetMovies(): LiveData<PagedList<MovieResult>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setPrefetchDistance(10)
+            .setPageSize(10)
+            .build()
 
-    fun onErrorGetMovies(): LiveData<String> {
-        return movieError
-    }
-
-    fun disposeElements() {
-        if (!disposableObserver.isDisposed) disposableObserver.dispose()
+        return LivePagedListBuilder(repository.getDataSourceFactory(), config).build()
     }
 
 

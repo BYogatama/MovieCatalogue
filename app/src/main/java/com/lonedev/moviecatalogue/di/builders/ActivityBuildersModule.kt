@@ -2,7 +2,7 @@ package com.lonedev.moviecatalogue.di.builders
 
 import com.lonedev.moviecatalogue.ui.main.details.movie.MovieDetailActivity
 import com.lonedev.moviecatalogue.ui.main.details.tvseries.TVSeriesDetailActivity
-import com.lonedev.moviecatalogue.ui.main.favorite.fragment.FavoriteActivity
+import com.lonedev.moviecatalogue.ui.main.favorite.FavoriteActivity
 import com.lonedev.moviecatalogue.ui.main.main.MainActivity
 import com.lonedev.moviecatalogue.ui.main.settings.SettingsActivity
 import dagger.Module

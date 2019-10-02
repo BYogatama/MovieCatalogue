@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "movies")
-class MovieResult(
+data class MovieResult(
     @PrimaryKey
     @SerializedName("id")
     val id: Int = -1,

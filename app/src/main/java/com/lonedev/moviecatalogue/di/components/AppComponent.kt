@@ -3,11 +3,9 @@ package com.lonedev.moviecatalogue.di.components
 import android.app.Application
 import com.lonedev.moviecatalogue.base.BaseApplication
 import com.lonedev.moviecatalogue.di.modules.AppModule
-import com.lonedev.moviecatalogue.di.modules.NetworkModule
 import com.lonedev.moviecatalogue.di.modules.ViewModelFactoryModule
 import com.lonedev.moviecatalogue.di.builders.ActivityBuildersModule
 import com.lonedev.moviecatalogue.di.builders.FragmentBuildersModule
-import com.lonedev.moviecatalogue.di.builders.ServiceBuildersModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -21,7 +19,6 @@ import javax.inject.Singleton
         (ActivityBuildersModule::class),
         (FragmentBuildersModule::class),
         (ViewModelFactoryModule::class),
-        (ServiceBuildersModule::class),
         (AndroidSupportInjectionModule::class)
     ]
 )

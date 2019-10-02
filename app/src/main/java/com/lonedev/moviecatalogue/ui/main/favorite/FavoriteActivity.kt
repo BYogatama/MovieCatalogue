@@ -4,7 +4,7 @@
  * Last modified 7/2/19 2:24 PM
  */
 
-package com.lonedev.moviecatalogue.ui.main.favorite.fragment
+package com.lonedev.moviecatalogue.ui.main.favorite
 
 import android.os.Bundle
 import android.view.MenuItem

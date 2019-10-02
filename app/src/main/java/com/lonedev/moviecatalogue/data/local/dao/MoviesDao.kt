@@ -6,6 +6,7 @@
 
 package com.lonedev.moviecatalogue.data.local.dao
 
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -17,7 +18,7 @@ import io.reactivex.Single
 interface MoviesDao {
 
     @Query("SELECT * FROM movies")
-    fun getMovies(): Single<List<MovieResult>>
+    fun getMovies(): DataSource.Factory<Int, MovieResult>
 
     @Query("SELECT * FROM movies WHERE id=:movieId")
     fun getMovie(movieId: Int): Single<MovieResult>

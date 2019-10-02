@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.lonedev.moviecatalogue">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <permission android:name="com.lonedev.moviecatalogue.provider.movies.READ_WRITE_MOVIES"
@@ -49,7 +50,7 @@
         </activity>
         <activity android:name=".ui.main.details.movie.MovieDetailActivity"/>
         <activity android:name=".ui.main.details.tvseries.TVSeriesDetailActivity"/>
-        <activity android:name=".ui.main.favorite.fragment.FavoriteActivity"/>
+        <activity android:name=".ui.main.favorite.FavoriteActivity"/>
         <activity android:name=".ui.main.settings.SettingsActivity"/>
 
         <provider

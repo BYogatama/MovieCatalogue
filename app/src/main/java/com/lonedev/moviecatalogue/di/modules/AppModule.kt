@@ -6,9 +6,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.lonedev.moviecatalogue.R
-import com.lonedev.moviecatalogue.data.local.dao.MoviesDao
-import com.lonedev.moviecatalogue.data.remote.MovieApi
-import com.lonedev.moviecatalogue.data.repositories.MovieRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

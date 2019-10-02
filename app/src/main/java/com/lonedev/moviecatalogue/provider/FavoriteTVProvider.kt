@@ -21,15 +21,15 @@ import com.lonedev.moviecatalogue.data.models.Favourites
 class FavoriteTVProvider : ContentProvider() {
 
     companion object {
-        private val AUTHORITIES = "com.lonedev.moviecatalogue.provider.tvs"
+        const val AUTHORITIES = "com.lonedev.moviecatalogue.provider.tvs"
+        const val CODE_TV_DIR = 101
+        const val CODE_TV_ITEM = 102
+
         var URI_FAVOURTIES = Uri.parse(
             "content://$AUTHORITIES/favourites"
         )
 
     }
-
-    private val CODE_TV_DIR = 101
-    private val CODE_TV_ITEM = 102
 
     lateinit var appDatabase: AppDatabase
     lateinit var favouritesDao: FavouritesDao

@@ -6,8 +6,10 @@
 
 package com.lonedev.moviecatalogue.data.repositories
 
+import androidx.paging.DataSource
 import com.lonedev.moviecatalogue.BuildConfig
 import com.lonedev.moviecatalogue.data.local.dao.TVSeriesDao
+import com.lonedev.moviecatalogue.data.models.MovieResult
 import com.lonedev.moviecatalogue.data.models.TVSeriesResult
 import com.lonedev.moviecatalogue.data.models.Video
 import com.lonedev.moviecatalogue.data.models.VideoResult
@@ -26,18 +28,7 @@ class TVSeriesRepository @Inject constructor(
 ) {
 
 
-    fun getTvSeries(): Observable<List<TVSeriesResult>> {
-        val observableFromNetwork = getTVSeriesFromNetwork()
-        val observableFromLocal = getTVSeriesFromLocal()
-        return Observable.concatArrayEager(observableFromNetwork, observableFromLocal)
-    }
-
-    /**
-     * Get TV Series from Network and return it as Observable<Movie<TVSeriesResult>>
-     *     for usage in TVSeriesViewModel. MemberApi is Injected using DI in this class
-     *     so it can be use directly in this class
-     */
-    private fun getTVSeriesFromNetwork(): Observable<List<TVSeriesResult>> {
+    fun getTVSeriesFromNetwork(page : Int): Observable<List<TVSeriesResult>> {
 
         var language = Locale.getDefault().toString()
         language = language.replace("_", "-")
@@ -46,7 +37,7 @@ class TVSeriesRepository @Inject constructor(
             language = "id-ID"
         }
 
-        return movieApi.getTvSeries(BuildConfig.API_KEY, language)
+        return movieApi.getTvSeries(BuildConfig.API_KEY, language, page)
             .map {
                 return@map it.results
             }
@@ -57,13 +48,8 @@ class TVSeriesRepository @Inject constructor(
             }
     }
 
-    /**
-     * Get Movies from LocalDB and return it as Observable<List<MovieResult>>
-     *     for usage in MovieViewModel. MovieDao is Injected using DI in this class
-     *     so it can be use directly in this class
-     */
-    private fun getTVSeriesFromLocal(): Observable<List<TVSeriesResult>> {
-        return tvSeriesDao.getTVSeries().toObservable()
+    fun getDataSourceFactory(): DataSource.Factory<Int, TVSeriesResult> {
+        return tvSeriesDao.getTVSeries()
     }
 
     fun getTvVideos(movieId: Int): Observable<Video<VideoResult>> {

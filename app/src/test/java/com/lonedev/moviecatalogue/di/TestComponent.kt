@@ -1,14 +1,12 @@
 /*
- * Created by Bagus Yogatama on 8/22/19 11:25 PM
+ * Created by Bagus Yogatama on 9/22/19 11:16 PM
  * Copyright (c) 2019 . All rights reserved.
- * Last modified 8/22/19 11:25 PM
+ * Last modified 9/22/19 11:14 PM
  */
 
 package com.lonedev.moviecatalogue.di
 
-import com.lonedev.moviecatalogue.MovieFragmentTest
 import com.lonedev.moviecatalogue.SearchFragmentTest
-import com.lonedev.moviecatalogue.TVSeriesFragmentTest
 import dagger.Component
 import javax.inject.Singleton
 
@@ -17,7 +15,5 @@ import javax.inject.Singleton
     modules = [AppModuleTest::class]
 )
 interface TestComponent {
-    fun movieFragmentTest(movieFragmentTest: MovieFragmentTest)
-    fun tvSeriesFragmentTest(tvSeriesFragmentTest: TVSeriesFragmentTest)
     fun searchFragmentTest(searchFragmentTest: SearchFragmentTest)
 }
